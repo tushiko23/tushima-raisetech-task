@@ -25,7 +25,7 @@
   
 ## DBサーバに関して
 1. DBサーバの名前→mysql  　バージョン8.0.36
-
+　![](lecture3-images/lecture3-3-8.png)
 　![](lecture3-images/lecture3-5-images.png)
 
 
