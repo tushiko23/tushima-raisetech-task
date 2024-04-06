@@ -36,5 +36,8 @@
 　![](lecture3-images/lecture3-6-images.png)
 　　
 　　
-3. Railsの構成管理ツール→ gem bundler
+3. Railsの構成管理ツール→ bundler　
+* Raisにおけるgemとbundlerについてどんな役割を果たすのかもう一度調べました。
+* 結果、gemはrailsを動かすためのアプリケーション、フレームワークをパッケージ化したものでbundlerはそれに対して、gemが正常に作動するためのバージョンやプログラムと言った構成を管理するツールとわかりました。
+* 従って、Railsの構成管理ツールはbundlerといえます。
 　
