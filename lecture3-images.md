@@ -9,10 +9,10 @@
 ## APサーバに関して
 1. APサーバの名前→puma    バージョン6.4.2
 
+　![](lecture3-images/lecture3-3-3-6.images.png)
   ![](lecture3-images/lecture3-3-3-6-images.png)
   ![](lecture3-images/lecture3-2-2-images.png)
-　![](lecture3-images/lecture3-3-3-images.png)
-　
+  ![](lecture3-images/lecture3-3-3-images.png)
 2. アクセスを終了させた場合→アクセスできない
 
 　![](lecture3-images/lecture3-3-images.png)
