@@ -7,7 +7,7 @@
 2. EC2の構築・セキュリティグループ
 ![](lecture4-1/ec2-MYec2server.png)
 * セキュリティグループ raisetechSecuringEC2intheCloud
-![](lecture4-1/ec2-lecture4-2-sgin.png)
+![](lecture4-1/ec2-security-group-henkou-1.png)
 * インバウンドポート22の(106.154.155.181/32)はマイIP、(sg-0740637188d204c9a)はSSH接続、RDS接続に使用したcloud9のデフォルトのセキュリティグループのIDです。
 ![](lecture4-1/ec2-lecture4-sgout.png)
 * セキュリティグループ ec2-rds-7
@@ -16,7 +16,9 @@
 * アウトバウンドポート3306の(sg-006e2b0f2dc59fa88)は接続したRDSとのセキュリティグループです。
 
 3. RDSの構築・RDSのセキュリティグループ
-![](lecture4-1/databaseraisetechproject.png)
+![](lecture4-1/rds-subnetgroup-2.png)
+![](lecture4-1/rds-subnetgroup-3.png)
+![](lecture4-1/rds-subnetgroup-1.png)
 * セキュリティグループ rds-ec2-6
 ![](lecture4-1/rds-ec2-6sgin.png)
 * インバウンドポート3306の(sg-0740637188d204c9a)はSSH接続、RDS接続に使用したcloud9のデフォルトのセキュリティグループのIDです。
