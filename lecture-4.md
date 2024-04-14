@@ -17,6 +17,7 @@
 
 3. RDSの構築・RDSのセキュリティグループ
 ![](lecture4-1/rds-subnetgroup-2.png)
+![](lecture4-1/rds-routetable-1.png)
 ![](lecture4-1/rds-subnetgroup-3.png)
 ![](lecture4-1/rds-subnetgroup-1.png)
 * セキュリティグループ rds-ec2-6
