@@ -36,3 +36,8 @@
 6. EC2からRDSに接続
 ![](lecture4-1/images4-4.png)
 ![](lecture4-1/images4-3.png)
+
+* お世話になっております。セキュリティグループに関して、整理しましたので確認よろしくお願いします！
+![](lecture4-1/kouseizu-4.png)
+* cloud9のEC2のセキュリティグループ
+![](lecture4-1/cloud9-security-group.png)
