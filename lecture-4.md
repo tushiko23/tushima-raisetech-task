@@ -38,9 +38,10 @@
 ![](lecture4-1/images4-3.png)
 
 * お世話になっております。セキュリティグループに関して、整理しましたので確認よろしくお願いします！
-![](lecture4-1/kouseizu-4.png)
+![]()
 * cloud9のEC2のセキュリティグループ　i-0cc4f830311ece574
-![](lecture4-1/cloud9-security-group.png)
+![](lecture4-1/cloud9-4-22-1.png)
+![](lecture4-1/cloud9-4-22-2.png)
 * EC2のセキュリティグループ　i-0cc74b4aec470a700 (MYEC2server)
 ![](lecture4-1/task4-4-22-2.png)
 ![](lecture4-1/task4-4-22-1.png)
