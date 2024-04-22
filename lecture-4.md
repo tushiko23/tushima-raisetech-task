@@ -60,3 +60,13 @@
 インバウンド　ポート3306  sg-0740637188d204c9a ec2-rds-6 [接続するEC2のセキュリティグループを付与]
 アウトバウンド　なし
 セキュリティグループ：raisetechSecuringRDSintheCloud、rds-ec2-7、rds-ec2-8に重複分あったため、インバウンド・アウトバウンドなしで訂正しています。
+
+お世話になっております。セキュリティグループ再度修正しましたのでよろしくお願いします。
+* EC2のセキュリティグループ　i-0cc74b4aec470a700 (MYEC2server)
+![](lecture4-1/ec2-4-22-4.png)
+![](lecture4-1/ec2-4-22-6.png)
+* RDSのセキュリティグループ　databaseraisetechproject23
+![](lecture4-1/rds-4-22-5.png)
+![](lecture4-1/rds-4-22-6.png)
+![](lecture4-1/4-22-8.png)
+![](lecture4-1/4-22-7.png)
