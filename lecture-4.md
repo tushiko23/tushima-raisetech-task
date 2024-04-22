@@ -42,11 +42,20 @@
 * cloud9のEC2のセキュリティグループ　i-0cc4f830311ece574
 ![](lecture4-1/cloud9-4-22-1.png)
 ![](lecture4-1/cloud9-4-22-2.png)
+インバウンド　なし
+アウトバウンド　
+ポート22　sg-0740637188d204c9a　ec2-rds-6 [接続するEC2のセキュリティグループを付与]
+ポート3306  sg-0d60f32112e4c9fc7 rds-ec2-6 [接続するRDSのセキュリティグループを付与]
 * EC2のセキュリティグループ　i-0cc74b4aec470a700 (MYEC2server)
 ![](lecture4-1/task4-4-22-2.png)
 ![](lecture4-1/task4-4-22-1.png)
+インバウンド 
+ポート22　sg-087a5003e150284cc 　[SSH接続に使用したcloud9環境のセキュリティグループを付与]
+アウトバウンド　ポート　3306　sg-0d60f32112e4c9fc7 rds-ec2-6　[接続するRDSのセキュリティグループを付与]
 * RDSのセキュリティグループ　databaseraisetechproject23
 ![](lecture4-1/images4-4.png)
 ![](lecture4-1/RDS-4-22-1.png)
 ![](lecture4-1/RDS-security-4-22-3.png)
 ![](lecture4-1/RDS-security-4-22-2.png)
+インバウンド　ポート3306  sg-0740637188d204c9a ec2-rds-6 [接続するEC2のセキュリティグループを付与]
+アウトバウンド　なし
