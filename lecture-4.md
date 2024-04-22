@@ -70,3 +70,6 @@
 ![](lecture4-1/rds-4-22-6.png)
 ![](lecture4-1/4-22-8.png)
 ![](lecture4-1/4-22-7.png)
+
+ルートテーブルのエビデンス画像の件、大変失礼致しました。こちらになります。
+![](lecture4-1/rds-routetable-1.png)
