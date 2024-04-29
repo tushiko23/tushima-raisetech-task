@@ -78,6 +78,8 @@
 ![](lecture4-1/4-28-route-tab.png)
 
 お疲れ様です！ルートテーブルの修正をしましたので、確認をお願いします！
-![](lecture4-1/4-29-modify.png)
-![](lecture4-1/4-29-2.png)
 ![](lecture4-1/4-29-3.png)
+![](lecture4-1/4-29-2.png)
+![](lecture4-1/4-29-modify.png)
+
+
