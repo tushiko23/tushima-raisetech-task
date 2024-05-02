@@ -87,3 +87,8 @@
 ![](lecture4-1/syuusei-1.png)
 ![](lecture4-1/syuusei-2.png)
 
+* 5/2修正分
+お疲れ様です。「明示的に関連付けがサブネット」はパブリックサブネット用のルートテーブルに関連付けしています。
+パブリックサブネット用のルートテーブルIDは「 rtb-01c9953b39c560617 / プロジェクト-rtb-public」です。エビデンス画像も添付しましたので、確認お願いします。
+![](lecture4-1/public-subenet-1.png)
+![](lecture4-1/public-subenet-2.png)
