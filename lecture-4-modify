@@ -1,1 +1,16 @@
+# 第４回課題
+* VPCを作成する
+* EC2とRDSの構築する
+* EC2とRDSを接続し、正常かを確認する
 
+1. VPC[vpc-0c78ca0c4905349ab]を作成する
+![](lecture4-1/images4-7.png)
+2. VPC[vpc-0c78ca0c4905349ab]上にサブネット及びプライベートサブネットを作成
+* パブリックサブネット[subnet-06e8c0dfee1d85d36]をアベイラビリティゾーン[ap-northeast-1a]に作成
+![](lecture4-1/task4-subnet-public1-ap-northeast-1a.png)
+* パブリックサブネット[subnet-0193c9023cdcc83a0]をアベイラビリティゾーン[ap-northeast-1c]に作成
+![](lecture4-1/task4-subnet-public2-ap-northwest-1c.png)
+* プライベートサブネット[subnet-042519ce548990bb8]をアベイラビリティゾーン[ap-northeast-1a]に作成
+![](lecture4-1/task4-subnet-private1-ap-northeast-1a.png)
+* プライベートサブネット[subnet-096b2b874c021c394]アベイラビリティゾーン[ap-northeast-1c]に作成
+![](lecture4-1/task4-subnet-private2-ap-northwest-1c.png)
