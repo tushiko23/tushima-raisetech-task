@@ -54,5 +54,7 @@
 sg-07b6d955ba3d37888の設定
 * インバウンド[ポート22を接続をするcloud9のセキュリティグループ(sg-087a5003e150284cc )に許可]→ec2にSSH接続するため
 ![](lecture4-1/ec2-raisetechSecuringEC2intheCloud-in.png)
-* アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7)に許可]
+* アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7)に許可]→rdsに接続するため
 ![](lecture4-1/ec2-raisetechSecuringEC2intheCloud-out.png)
+
+
