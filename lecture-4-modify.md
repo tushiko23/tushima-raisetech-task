@@ -40,7 +40,7 @@
 
 ![](lecture4-1/cloud9-sg-kouseizu.png)
 
-cloud9のセキュリティグループに[sg-087a5003e150284cc ][sg-0740637188d204c9a]を設定し、cloud9のEC2にアタッチ。
+cloud9のセキュリティグループに[sg-087a5003e150284cc ]を設定し、cloud9のEC2にアタッチ。
 ![](lecture4-1/cloud9-security-task4.png)
 sg-087a5003e150284ccの設定
 * アウトバウンド[ポート22を接続するec2のセキュリティグループ(sg-0740637188d204c9a)に許可]→ec2にssh接続をするため
