@@ -31,7 +31,7 @@
 ![](lecture4-1/task4-rtb-private-subnet.png)
 ![](lecture4-1/VPC-task4-rtb-subnet-private.png)
 
-## EC2及びRDSを指定されたVPC環境に構築し、接続するためのセキュリティグループを設定する
+## EC2及びRDSを指定されたVPC環境に構築し、接続するためのセキュリティグループを設定し各リソースにアタッチ
 ※今回はローカルPCは、VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]で構築したcloud9のターミナルを使用しec2にSSH接続する。
 
 ![](lecture4-1/ec2-RDS-koutiku-security-group.png)
