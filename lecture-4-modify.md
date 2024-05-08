@@ -30,3 +30,27 @@
 * ルートテーブル[rtb-042ec775cf927977a]をプライベートサブネット[subnet-042519ce548990bb8]、[subnet-096b2b874c021c394]に関連付け
 ![](lecture4-1/task4-rtb-private-subnet.png)
 ![](lecture4-1/VPC-task4-rtb-subnet-private.png)
+
+## EC2及びRDSを指定されたVPC環境に構築し、接続するためのセキュリティグループを設定する
+※今回はローカルPCは、VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]で構築したcloud9のターミナルを使用しec2にSSH接続する。
+
+![](lecture4-1/ec2-RDS-koutiku-security-group.png)
+* VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]でcloud9の環境構築[i-0cc4f830311ece574 (aws-cloud9-raisetech-task-4-environment-28e0060b22db41babf50ad130d322c7e]
+![](lecture4-1/cloud9-4-22-1.png)
+
+![](lecture4-1/cloud9-sg-kouseizu.png)
+
+cloud9のセキュリティグループに[sg-087a5003e150284cc ][sg-0740637188d204c9a]を設定する。
+![](lecture4-1/cloud9-security-task4.png)
+sg-087a5003e150284ccの設定
+* アウトバウンド[ポート22を接続するec2のセキュリティグループ(sg-0740637188d204c9a)に許可]→ec2にssh接続をするため
+![](lecture4-1/cloud9-sg-087a5003e150284cc-out-1.png)
+sg-0740637188d204c9aの設定
+* アウトバウンド[ポート3306をRDSのセキュリティグループに許可]→rdsに接続をするため
+![](lecture4-1/cloud9-sg-0740637188d204c9a-out.png)
+
+![](lecture4-1/EC2-sg-kouseizu.png)
+
+EC2のセキュリティグループに[][]を設定する。
+
+![]()
