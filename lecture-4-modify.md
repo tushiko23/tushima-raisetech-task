@@ -3,6 +3,8 @@
 * EC2とRDSの構築する
 * EC2とRDSを接続し、正常かを確認する
 
+## VPC環境を構築
+![](lecture4-1/VPC-environment-1.png)
 1. VPC[vpc-0c78ca0c4905349ab]を作成する
 ![](lecture4-1/images4-7.png)
 2. VPC[vpc-0c78ca0c4905349ab]上にサブネット及びプライベートサブネットを作成
