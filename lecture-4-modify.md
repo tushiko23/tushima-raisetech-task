@@ -50,14 +50,16 @@
 
 * VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]でEC2[i-0cc74b4aec470a700]を構築する。
 ![](lecture4-1/ec2-sg-07b6d955ba3d37888-1.png)
-* EC2のセキュリティグループに[sg-07b6d955ba3d37888]を設定し、EC2にアタッチ。
+* セキュリティグループに[sg-07b6d955ba3d37888]を設定し、EC2にアタッチ。
 sg-07b6d955ba3d37888の設定
 * インバウンド[ポート22を接続をするcloud9のセキュリティグループ(sg-087a5003e150284cc )に許可]→ec2にSSH接続するため
 ![](lecture4-1/ec2-raisetechSecuringEC2intheCloud-in.png)
 * アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7)に許可]→rdsに接続するため
 ![](lecture4-1/ec2-raisetechSecuringEC2intheCloud-out.png)
 
+![](lecture4-1/rds-kouseizu-1.png)
+
 * VPC[vpc-0c78ca0c4905349ab]上のサブネットグループ[default-vpc-0c78ca0c4905349ab]でRDS[databaseraisetechproject23]を構築する。
 ![](lecture4-1/rds-databaseraisetechproject23.png)
-
+* セキュリティグループに[sg-0d60f32112e4c9fc7]設定し、RDSにアタッチ。
 
