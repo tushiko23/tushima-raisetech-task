@@ -53,9 +53,9 @@ sg-087a5003e150284cc=aws-cloud9-raisetech-task-4-environmentの設定
 * セキュリティグループに[sg-0740637188d204c9a=ec2-rds-6]設定し、EC2にアタッチ。
 sg-0740637188d204c9a=ec2-rds-6の設定
 * インバウンド[ポート22を接続をするcloud9のセキュリティグループ(sg-087a5003e150284cc=aws-cloud9-raisetech-task-4-environmentに許可]→ec2にSSH接続するため
-![](lecture4-1/ec2-rds-6-sg-in.png)
+![](lecture4-1/ec2-rds-6-in.png)
 * アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7=rds-ec2-6に許可]→rdsに接続するため
-![](lecture4-1/ec2-rds-6-sg-out.png)
+![](lecture4-1/ec2-rds-6-out.png)
 
 ![](lecture4-1/task4-kouseizu-RDS.png)
 * VPC[vpc-0c78ca0c4905349ab]上のサブネットグループ[default-vpc-0c78ca0c4905349ab]でRDS[databaseraisetechproject23]を構築する。
