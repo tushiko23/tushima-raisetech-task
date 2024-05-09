@@ -71,7 +71,7 @@ sg-0d60f32112e4c9fc7=rds-ec2-6の設定
 * ssh -i "使用するキーペア"　ユーザ名@ec2のパブリックIPアドレス　コマンドを実施。 ssh -i "cloud9-test.pem" ec2-user@ec2-52-195-170-103.ap-northeast-1.compute.amazonaws.com
 * ![](lecture4-1/images4-8.png)
 * EC2[]からRDSに接続 
-  (lecture4-1/ec2-computer-resource.png)
+![](lecture4-1/ec2-computer-resource.png)
 * mysql -h [エンドポイント] -P 3306 -u [RDSで設定したマスタユーザ名] -p コマンドを実施　mysql -h databaseraisetechproject23.cdisayw68dw6.ap-northeast-1.rds.amazonaws.com -P 3306 -u admintushiko23 -p
 ![](lecture4-1/images4-3.png)
 * show databases;コマンドを実施し、内容を表示できるか確認。
