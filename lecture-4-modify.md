@@ -48,7 +48,7 @@ sg-087a5003e150284cc=aws-cloud9-raisetech-task-4-environmentの設定
 ![](lecture4-1/sg-087a5003e150284cc-out-1.png)
 
 ![](lecture4-1/task4-kouseizu-ec2.png)
-* VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]でEC2[i-0cc74b4aec470a700=]を構築する。
+* VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]でEC2[i-0cc74b4aec470a700=MYEC2server]を構築する。
 ![](lecture4-1/myec2server-sg.png)
 * セキュリティグループに[sg-0740637188d204c9a=ec2-rds-6]設定し、EC2にアタッチ。
 sg-0740637188d204c9a=ec2-rds-6の設定
