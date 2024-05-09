@@ -74,6 +74,6 @@ sg-0d60f32112e4c9fc7=rds-ec2-6の設定
 ![](lecture4-1/ec2-computer-resource.png)
 * mysql -h [エンドポイント] -P 3306 -u [RDSで設定したマスタユーザ名] -p コマンドを実施
 * mysql -h databaseraisetechproject23.cdisayw68dw6.ap-northeast-1.rds.amazonaws.com -P 3306 -u admintushiko23 -p
-![](lecture4-1/images4-3.png)
 * show databases;コマンドを実施し、内容を表示できるか確認。
+![](lecture4-1/images4-3.png)
 ![](lecture4-1/images4-4.png)
