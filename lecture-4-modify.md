@@ -40,30 +40,38 @@
 
 ![](lecture4-1/cloud9-sg-kouseizu.png)
 
-セキュリティグループに[sg-087a5003e150284cc ]を設定し、cloud9のEC2にアタッチ。
+セキュリティグループに[sg-087a5003e150284cc=aws-cloud9-raisetech-task-4-environment]を設定し、cloud9のEC2にアタッチ。
 ![](lecture4-1/cloud9-sg-087a5003e150284cc.png)
-sg-087a5003e150284cc の設定
-* アウトバウンド[ポート22を接続するec2のセキュリティグループ(sg-0740637188d204c9a)に許可]→ec2にssh接続をするため
-* アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7)に許可]→rdsに接続をするため
+sg-087a5003e150284cc=aws-cloud9-raisetech-task-4-environmentの設定
+* アウトバウンド[ポート22を接続するec2のセキュリティグループ(sg-0740637188d204c9a=ec2-rds-6に許可]→ec2にssh接続をするため
+* アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7=rds-ec2-6)に許可]→rdsに接続をするため
 ![](lecture4-1/sg-087a5003e150284cc-out-1.png)
 
 ![](lecture4-1/EC2-sg-kouseizu.png)
 
 * VPC[vpc-0c78ca0c4905349ab]上のパブリックサブネット[subnet-06e8c0dfee1d85d36]でEC2[i-0cc74b4aec470a700]を構築する。
 ![](lecture4-1/ec2-sg-07b6d955ba3d37888-1.png)
-* セキュリティグループに[sg-07b6d955ba3d37888]を設定し、EC2にアタッチ。
-sg-07b6d955ba3d37888の設定
-* インバウンド[ポート22を接続をするcloud9のセキュリティグループ(sg-087a5003e150284cc )に許可]→ec2にSSH接続するため
+* セキュリティグループに[sg-0740637188d204c9a=ec2-rds-6]設定し、EC2にアタッチ。
+sg-0740637188d204c9a=ec2-rds-6の設定
+* インバウンド[ポート22を接続をするcloud9のセキュリティグループ(sg-087a5003e150284cc=aws-cloud9-raisetech-task-4-environmentに許可]→ec2にSSH接続するため
 ![](lecture4-1/ec2-raisetechSecuringEC2intheCloud-in.png)
-* アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7)に許可]→rdsに接続するため
+* アウトバウンド[ポート3306をRDSのセキュリティグループ(sg-0d60f32112e4c9fc7=rds-ec2-6に許可]→rdsに接続するため
 ![](lecture4-1/ec2-raisetechSecuringEC2intheCloud-out.png)
 
 ![](lecture4-1/rds-kouseizu-1.png)
 
 * VPC[vpc-0c78ca0c4905349ab]上のサブネットグループ[default-vpc-0c78ca0c4905349ab]でRDS[databaseraisetechproject23]を構築する。
 ![](lecture4-1/rds-databaseraisetechproject23.png)
-* セキュリティグループに[sg-0d60f32112e4c9fc7]設定し、RDSにアタッチ。
+* セキュリティグループに[sg-0d60f32112e4c9fc7=rds-ec2-6]設定し、RDSにアタッチ。
 
-sg-0d60f32112e4c9fc7の設定
-* インバウンド[ポート3306を接続するec2のセキュリティグループ(sg-0740637188d204c9a)に許可]→rdsに接続するため
+sg-0d60f32112e4c9fc7=rds-ec2-6の設定
+* インバウンド[ポート3306を接続するec2のセキュリティグループ(sg-0740637188d204c9a=ec2-rds-6)に許可]→rdsに接続するため
 * ![](lecture4-1/rds-sg-0d60f32112e4c9fc7.png)
+
+## EC2とRDSを接続し、正常かを確認する
+* ローカルPCからEC2にSSH接続
+![](lecture4-1/images4-8.png)
+* EC2からRDSに接続
+![](lecture4-1/images4-4.png)
+
+![](lecture4-1/images4-3.png)
