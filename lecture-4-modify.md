@@ -6,7 +6,7 @@
 ## VPC環境を構築
 ![](lecture4-1/VPC-environment-1.png)
 1. VPC[vpc-0c78ca0c4905349ab]を作成する
-![](lecture4-1/images4-7.png)
+![](lecture4-1/vpc-0c78ca0c4905349ab.png)
 2. VPC[vpc-0c78ca0c4905349ab]上にサブネット及びプライベートサブネットを作成
 * パブリックサブネット[subnet-06e8c0dfee1d85d36]をアベイラビリティゾーン[ap-northeast-1a]に作成
 ![](lecture4-1/task4-subnet-public1-ap-northeast-1a.png)
