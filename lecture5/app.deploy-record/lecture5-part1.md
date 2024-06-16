@@ -144,7 +144,7 @@ password: RDSのマスタパスワード　　セキュリティのため非公�
 host    : RDSのエンドポイント　　database-1.cdisayw68dw6.ap-northeast-1.rds.amazonaws.com
 port    : 3306
 ```
-![](../images/mysql-yml.png)
+![](../images/mysql-yml-1.png)
 
 3　EC2のセキュリティグループを「インポート3000番」「0.0.0.0./0」を付与
 ![](../images/securitygloup1.png)　　
