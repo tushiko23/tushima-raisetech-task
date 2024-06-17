@@ -72,7 +72,7 @@
 
 ## 構築した環境の構成図の作成
 
-![](lecture5/images/kouseizu-retry.png)
+![](lecture5/images/kouseizu-modify.png)
 
 ## 感想
 
