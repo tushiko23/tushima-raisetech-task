@@ -2,31 +2,28 @@
 
 ## 確認していただきたいこと
 
-1. [最後にAWSを利用した日の記録をCloudTrailのイベントから3つ探し出す](#最後にAWSを利用した日の記録をCloudTrailのイベントから3つ探し出す)
+1. 最後にAWSを利用した日の記録をCloudTrailのイベントから3つ探し出す
  
-2. [CloudWatchアラームにてALBのアラームを設定しメール通知する](#CloudWatchアラームにてALBのアラームを設定しメール通知する)
+2. CloudWatchアラームにてALBのアラームを設定しメール通知する
 
-3. [AWS利用料の見積もりを作成](#AWS利用料の見積もりを作成)
+3. AWS利用料の見積もりを作成
 
-4. [AWS利用料の報告と今後の改善策](#現在のAWS利用料を確認して報告する)
+4. AWS利用料の報告と今後の改善策
 
-5. [第5回課題で使用したVPCに、VPCフローログを有効化し、保存先をCloudWatchlogsに指定](#第5回課題で使用したVPCにVPCフローログを有効化し保存先をCloudWatchlogsに指定する)
+5. 第5回課題で使用したVPCに、VPCフローログを有効化し、保存先をCloudWatchlogsに指定](#第5回課題で使用したVPCにVPC
 
-6. [感想](#感想)
+6. 感想
 
-### 最後にAWSを利用した日の記録をCloudTrailのイベントから3つ探し出す
+### 最後にAWSを利用した日の記録をCloudTrailのイベントに含まれる内容から3つ探し出す
 
 1. ConsoleLogin　(IAMユーザー:youren-@tusiko=0223としてmfa認証を使用してAWSにログイン)
 ![](lecture6/images/consolelogin-1.png)
 ![](lecture6/images/consolelogin-2.png)
+- イベントを３つピックアップ
 
-2. CreateTrail (IAMユーザー:youren-@tusiko=0223がcloudtrailにて証跡を作成)
-![](lecture6/images/createtrail-1.png)
-![](lecture6/images/createtrail-2.png)
-
-3. CreateBucket (CloudTrailにて証跡のログを保存するS3バゲットを作成)
-![](lecture6/images/createbucket-1.png)
-![](lecture6/images/createbucket-2.png)
+1. "eventTime": "2024-06-18T07:52:12Z",
+2. "eventSource": "signin.amazonaws.com",
+3. "eventName": "ConsoleLogin"
 
 ### CloudWatchアラームにてALBのアラームを設定しメール通知する
 
@@ -37,8 +34,6 @@
 |閾値およびアクション|平均値300秒あたり1以上(5分ごとに収集されたメトリクスの合計値が閾値を超えたらアラームをトリガーする)|
 |通知方法|EメールAmazon SNS を利用|
 |アクション|OKアクション及びアラームアクションを付与|
-
-
 
 ![](lecture6/images/task6-alerm-action.png)
 　　　　　　　　　　
@@ -79,19 +74,19 @@ Jun 18 20:43:10 ip-10-0-3-169.ap-northeast-1.compute.internal systemd[1]: Stoppe
 
 ### AWS利用料の見積もりを作成
 
-見積もりURLは[こちら](https://calculator.aws/#/estimate?id=a58b6d23f358212b851086839efed659057decd7)
+見積もりURLは[こちら](https://calculator.aws/#/estimate?id=c0c08b1c35f59ff0ff60b8531d7bec263a8a7b0f)
 
 見積もり内容の詳細
 - 第5回課題で構築した環境を想定しております
 - リージョン　アジアパシフィック:東京で計算
 
-![](lecture6/images/kouseizu-modify.png)
+![](lecture6/images/kouseizu-2.png)
 
 1. EC2 (アプリケーションサーバー 1台)
 2. RDS (データベースサーバー　1台)
 3. ELB (ALB　1台)
 4. VPC (Public IPv4 Addressを1つ使用)
-5. S3  (サンプルアプリケーションの画像保存としてバゲットを作成)
+5. S3  (サンプルアプリケーションの画像保存としてバケットを作成)
 
 | サービス名                                | 設定の内容 |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -135,9 +130,7 @@ $26.80→4,234.83円(6/21の為替で)
 ![](lecture6/images/lastmonth-costreport-4.png)
 
 #### 今後の改善策
-- 今後、使用しないインスタンスは終了動作を行い、使用する可能性がある停止状態のインスタンスについてはボリュームの削除を行うことを
-  徹底すること、使用するリソースに関してはコスト配分タグを配置して料金の発生を抑えるようにしていきます。
-
+- 今後、使用しないインスタンスは終了動作を行い、今後、使用するリソースに関してはコスト配分タグを配置して料金の発生を明確に分析して予算超過しそうなものについてはメンバーに報告・相談をするようにしていきます。
 - 無料利用枠に収まっているか。→収まっていない
 
 
@@ -194,7 +187,7 @@ IAMポリシーの名称　task6-cloudwatchlogs-policy
 | ---- | ---- |
 |VPCフローログ名| myproject-flow-log-1 |
 |送信先ロググループ| raisetech-task6-log |
-|IAM ロール | task6-cloudwatchlogs-policy|
+|IAM ロール | task6-vpc-flow-logs-role 
 
 ![](lecture6/images/vpc-flow-log-1.png)
 ![](lecture6/images/vpc-flow-log-2.png)
@@ -209,13 +202,3 @@ VPC内にあるEC2インスタンスをSSH接続して確認
 - システムの安定稼働のために、logを常にとり、トラブルや障害に常に備えていく考え方が非常に重要であることを学びました。logを常に記録し、予期せぬ異常に備えてcloudwatchでアラーム設定をすること、トラブル、障害が起こったときにlogを基に原因を突き止め、解決していけるよう常にlogが記録できているかを念頭に置いてこれから課題に励みます。
 
 - AWSのコスト管理をすることの大切さを身を持って学びました。あとから、余分なコストがかかってしまったということがないように、タグを使ってプロジェクト毎に管理する、異常値を検知したらCost Anomaly Detection といった目視だけでなくツールも活用してコスト管理を行っていくことで適切なコスト管理ができるようになりたいです。
-
-
-
-
-
-
-
-　　　　　　　　                                                                      
-
-
