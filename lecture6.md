@@ -10,7 +10,7 @@
 
 4. AWS利用料の報告と今後の改善策
 
-5. 第5回課題で使用したVPCに、VPCフローログを有効化し、保存先をCloudWatchlogsに指定]
+5. 第5回課題で使用したVPCに、VPCフローログを有効化し、保存先をCloudWatchlogsに指定
 
 6. 感想
 
@@ -74,13 +74,13 @@ Jun 18 20:43:10 ip-10-0-3-169.ap-northeast-1.compute.internal systemd[1]: Stoppe
 
 ### AWS利用料の見積もりを作成
 
-見積もりURLは[こちら](https://calculator.aws/#/estimate?id=c0c08b1c35f59ff0ff60b8531d7bec263a8a7b0f)
+見積もりURLは[こちら](https://calculator.aws/#/estimate?id=af6ab155831cb03c3f6fdcf337a89b89ed23d248)
 
 見積もり内容の詳細
 - 第5回課題で構築した環境を想定しております
 - リージョン　アジアパシフィック:東京で計算
 
-![](lecture6/images/kouseizu-2.png)
+![](lecture6/images/kouseizu-5.png)
 
 1. EC2 (アプリケーションサーバー 1台)
 2. RDS (データベースサーバー　1台)
