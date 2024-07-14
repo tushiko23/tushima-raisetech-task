@@ -10,6 +10,7 @@
 
 ## CloudFormationでコード化して環境を作成
 今回構築する構成図 (第5回課題で使用したもの)
+
 ![](lecture10/images/kouseizu-5.png)
 ### ネットワーク環境を構築
 
