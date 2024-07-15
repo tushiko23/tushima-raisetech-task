@@ -110,8 +110,10 @@ VPC
 
 |名称 | 個数 |リソースの値|
 | ---- | ---- | ---- |
-|EC2<br>lecture10clf|1つ| i-0fde478caee01e0d3|
-|ElasticIP|1つ|13.115.190.98|
+|EC2<br>lecture10clf|1つ|i-07299a8945c13b5b4 |
+|ElasticIP|1つ|54.150.253.92|
+|IAMロール|1つ|lecture10sample5-S3AccessRole-Q02N8PhaWAii |
+|IAMポリシー|1つ|s3access|
 
 
 今回作成するEC2の明記事項
@@ -119,15 +121,28 @@ VPC
 * キーペア名は"lecture10-clf.pem"で、SSH接続する際は、ホームディレクトリ下に配置して使用します。
 * EC2インスタンスのOSはAmazonLinux2を使用します。パラメータにて、最新のAMI-IDを取得して構築します。
 * 今後の自動化の課題に引き続き使用することを考慮し、ElasticIPを作成し、EC2にアタッチして使用します。
+* 今回は、S3にアクセスするためにIAMポリシー及びIAMロールを作成して、EC2にアタッチします。
 
 ### 実行し、環境が自動で作られていること確認。
 スタックの作成
-![](lecture10/images/lecture10-sample4-ec2.png)
+![](lecture10/images/lecture10-sample5-ec2.png)
 EC2の作成確認と関連付けを確認   
-![](lecture10/images/lecture10-clf-ec2-1.png)
-![](lecture10/images/lecture10-clf-ec2-2.png)
-![](lecture10/images/lecture10-clf-ec2-3.png)
-![](lecture10/images/lecture10-clf-ec2-4.png)
+![](lecture10/images/clf-ec2-1.png)
+![](lecture10/images/clf-ec2-2.png)
+![](lecture10/images/clf-ec2-3.png)
+![](lecture10/images/clf-ec2-4.png)
+
+S3にアクセスするためのIAMポリシーの作成を確認
+![](lecture10/images/clf-s3policy.png)
+
+S3にアクセスするためのIAMロールの作成を確認
+![](lecture10/images/clf-s3role.png)
+
+IAMロールにIAMポリシーがアタッチされているか確認
+![](lecture10/images/clf-role-policy-attach.png)
+
+EC2にIAMロールがアタッチされていることを確認
+![](lecture10/images/clf-ec2-1.png)
 
 ### RDSを作成
 
@@ -166,46 +181,41 @@ EC2の作成確認と関連付けを確認
 スタックの作成
 ![](lecture10/images/lecture10-sample6-alb.png)
 ターゲットグループ
-![](lecture10/images/lecture10-clf-tg-1.png)
-![](lecture10/images/lecture10-clf-tg-2.png)
+![](lecture10/images/clf-tg-1.png)
+![](lecture10/images/clf-tg-2.png)
 
 ロードバランサー
 リッスン80番で作成確認
-![](lecture10/images/lecture10-clf-alb-http-80.png)
-![](lecture10/images/lecture10-clf-alb-1.png)
-![](lecture10/images/lecture10-clf-alb-2.png)
+![](lecture10/images/clf-alb-http-80.png)
+![](lecture10/images/clf-alb-1.png)
+![](lecture10/images/clf-alb-2.png)
 
 インスタンスとロードバランサーをターゲットグループに連携させる
-![](lecture10/images/lecture10-clf-alb-3.png)
+![](lecture10/images/clf-alb-3.png)
 
 #### S3を作成
 
 コード化したファイルは[こちら](lecture10/lecture10-s3.yml)
 
 今回作成するS3の明記事項
-* 今回作成するS3には、EC2へのアクセス権限を含んだIAMロール及びバケットポリシーを付与します。
 * 今回の作成に使用するIAMユーザーは第1回課題で作成した"AdministratorAccess"をもつIAMユーザーを使用します。
 (S3FullAccess権限も含まれます)
+
 #### 実行し、環境が自動で作られていること確認。
 スタックの作成
-![](lecture10/images/lecture10-sample5-S3.png)
+![](lecture10/images/lecture10-sample5-s3.png)
 
-S3のバゲット作成確認及びバケットポリシー付与を確認
-![](lecture10/images/lecture10-clf-bucket-1.png)
-![](lecture10/images/lecture10-clf-bucket-2.png)
-![](lecture10/images/lecture10-clf-bucket-3.png)
-
-IAMロール作成確認
-![](lecture10/images/lecture10-s3-ec2-accessrole-1.png)
-![](lecture10/images/lecture10-s3-ec2-accessrole-2.png)
+S3のバゲット作成を確認
+![](lecture10/images/clf-bucket-1.png)
+![](lecture10/images/clf-bucket-2.png)
 
 S3バケットに画像がアップロードできるか確認
-![](lecture10/images/lecture10-clf-bucket-approad-1.png)
-![](lecture10/images/lecture10-clf-bucket-approad-2.png)
+![](lecture10/images/clf-bucket-approad-1.png)
+![](lecture10/images/clf-bucket-approad-2.png)
 
 ### 作成したリソースの各種動作確認
 EC2インスタンスからのSSH接続
-![](lecture10/images/lecture10-clf-ssh.png)
+![](lecture10/images/clf-ssh.png)
 
 RDSへの接続
 ```sh
@@ -216,7 +226,7 @@ sudo yum install -y mysql
 mysql -h [エンドポイント] -P 3306 -u admin -p
 ```
 接続確認
-![](lecture10/images/lecture10-clf-rds-connect.png)
+![](lecture10/images/clf-rds-connect.png)
 
 nginxをインストールし、起動し、ALBをhealthy状態にする
 ```sh
@@ -226,11 +236,11 @@ sudo amazon-linux-extras install nginx1
 sudo systemctl start nginx
 ```
 nginxの起動
-![](lecture10/images/lecture10-clf-nginx-start.png)
+![](lecture10/images/clf-nginx-start.png)
 
 ALB及びターゲットグループの状態を確認
-![](lecture10/images/lecture10-clf-healthy-1.png)
-![](lecture10/images/lecture10-clf-healthy-2.png)
+![](lecture10/images/clf-healthy-1.png)
+![](lecture10/images/clf-healthy-2.png)
 
 ### 感想
 * スタック作成時にyamlファイルから出るエラーメッセージの解読と解決に苦労しました。インデントエラーやOutputの関係値をいつも考えて、何十台、何百台のリソースを構築できるテンプレートにしていきたいです。
