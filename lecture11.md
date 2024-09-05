@@ -2,7 +2,7 @@
 
 ## 課題内容
 * 第5回課題で構築した環境にServerSpecを導入しテスト成功を確認する
-* 今回の課題では、AWSリソースの作成はCloudFormationのテンプレートで自動構築し、動作環境のインストール及びRailsアプリケーションのデプロイは手動構築でするものとする。
+* 今回の課題では、AWSリソースの作成は第10回課題のCloudFormationのテンプレートで自動構築し、動作環境のインストール及びRailsアプリケーションのデプロイは手動構築でするものとする。
 
 ## 確認していただきたいこと
 1. ServerSpecのテスト項目及びテストコードは適切か
@@ -95,12 +95,11 @@ node     v17.9.1
 
 6. テスト接続して動作するか
 
-   ※curlでHTTPアクセスをして200番を返すテストを行うことで確認する
+* curlでHTTPアクセスをして200番を返すテストを行うことで確認する
 
 
 ### テスト結果
 
-エビデンス画像6
 ![](lecture11/images/serverspec-test-result1.png)
 ![](lecture11/images/serverspec-test-result2.png)
 ![](lecture11/images/serverspec-test-result3.png)
