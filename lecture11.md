@@ -65,8 +65,8 @@ Select number: 2
 ### spec/localhost/配下のsample_spec.rbにテスト項目を編集・追加する
 [第11回分事前テストサンプル分](https://github.com/MasatoshiMizumoto/raisetech_documents/tree/main/aws/samples/serverspec)を元に作成
 
-![](lecture11/images/serverspec-testcode-1.png)
-![](lecture11/images/serverspec-testcode-2.png)
+![](lecture11/images/Serverspec-testcode1.png)
+![](lecture11/images/Serverspec-testcode2.png)
 
 テスト項目
 
@@ -76,7 +76,7 @@ Select number: 2
 ```sh
 git make gcc-c++ patch libyaml-devel libffi-devel libicu-devel zlib-devel readline-devel libxml2-devel libxslt-devel ImageMagick ImageMagick-devel openssl-devel libcurl libcurl-devel curl webpack webpackcli
 ```
-* webpack webpackcliはnpmでインストールしたので、npm内のリストにwebpack webpackcliがあるかを確認するテストを実施することで、インストールを確認する
+* webpack webpack-cliはnpmでインストールしたので、npm内のリストにwebpack webpack-cliがあるかを確認するテストを実施することで、インストールを確認する
 
 3. 必要動作環境がそれぞれインストールされているか、指定したバージョンになっているか
 ```sh
@@ -100,9 +100,9 @@ node     v17.9.1
 
 ### テスト結果
 
-![](lecture11/images/serverspec-test-result1.png)
-![](lecture11/images/serverspec-test-result2.png)
-![](lecture11/images/serverspec-test-result3.png)
+![](lecture11/images/Serverspec-test-result1.png)
+![](lecture11/images/Serverspec-test-result2.png)
+![](lecture11/images/Serverspec-test-result3.png)
 
 感想
 * 手動構築のときは、ポートの確認や動作環境のバージョン確認をマネジメントコンソールやコマンドで確認していましたが、serverspecを導入したことでテストを自動で実行でき省力化もできるので、現場でも要件によってテストをより正確に、時間をかけずにできるかを考えて導入したいです。
