@@ -70,15 +70,15 @@ Select number: 2
 
 テスト項目
 
-1.ポート22番・80番がリッスン（通信待ち受け状態）であるか
+1. ポート22番・80番がリッスン（通信待ち受け状態）であるか
 
-2.アプリケーションのデプロイに必要なパッケージ(下記参照)がインストールされているか
+2. アプリケーションのデプロイに必要なパッケージ(下記参照)がインストールされているか
 ```sh
 git make gcc-c++ patch libyaml-devel libffi-devel libicu-devel zlib-devel readline-devel libxml2-devel libxslt-devel ImageMagick ImageMagick-devel openssl-devel libcurl libcurl-devel curl webpack webpackcli
 ```
-※webpack webpackcliはnpmでインストールしたので、npm内のリストにwebpack webpackcliがあるかを確認するテストを実施することで、インストールを確認する
+* webpack webpackcliはnpmでインストールしたので、npm内のリストにwebpack webpackcliがあるかを確認するテストを実施することで、インストールを確認する
 
-3.必要動作環境がそれぞれインストールされているか、指定したバージョンになっているか
+3. 必要動作環境がそれぞれインストールされているか、指定したバージョンになっているか
 ```sh
 ruby     3.2.3　
 bundler  2.3.14
@@ -89,8 +89,7 @@ node     v17.9.1
 
 4. nginx・pumaがインストールされているか
 
-※pumaはrubyのGemとしてインストールされているので、Gem内のリストにpumaがあるかを確認するテストを実施することで、インストールを
-　確認する
+* pumaはrubyのGemとしてインストールされているので、Gem内のリストにpumaがあるかを確認するテストを実施することで、インストールを確認する
 
 5. nginx・pumaがEC2起動時に自動起動されるか、起動状態であるか
 
