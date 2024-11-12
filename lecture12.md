@@ -4,70 +4,113 @@ CI/CDツールCircleCIを導入し、提供されたサンプルコンフィグ�
 
 [提供されたサンプルコンフィグはこちら](https://github.com/MasatoshiMizumoto/raisetech_documents/tree/main/aws/samples/circleci)
 
+[サンプルコンフィグの内容についてはこちら](./lecture12/reference.md)
+
+### 事前準備
 1. Circleciとgithubを連携させる
+
 [参考サイト](https://www.techpit.jp/courses/78/curriculums/81/sections/615/parts/2086)
 
-今回は、課題提出用のレポジトリ`tushima-raisetech-task`で確認します
-2. 今回のサンプルコンフィグの解説
-<details><summary>サンプルコンフィグの内容はこちら</summary>
+2. トリガーの設定
+* 今回は、課題提出用のレポジトリ`tushima-raisetech-task`で確認します。
+* 新たに、cloudformationディレクトリを作成し、第10回課題でレビューいただいたcloudformationのテンプレートを配置します。
+* イベントトリガータイミングは、ブランチ`git-lecture12`がpushされたときにcfn-lintでCFnの構文を確認します。
 
+![](./lecture12/images/lecture12-1.png)
+
+## 動作確認結果
+
+### 1. 1回目の確認→failed(失敗が表示)
+
+![](./lecture12/images/lecture12-2.png)
+
+![](./lecture12/images/lecture12-3.png)
+
+failedの原因→警告コードW2001,W1011,W2001が出ているため。
+
+改善方法
+  1. CloudFormation内のテンプレートを修正し、再度動作確認。
+  2. run cfn-lint内に-iオプションを追加して、警告コードを指定し、検知無視して動作確認する。
+
+今回は、警告コードとテンプレートの中身を確認し照らし合わせた結果、1の方法を選択しました。
+
+警告コードの内容と対処方法
+
+* 警告コードW2001
 ```
-version: 2.1
-orbs:
-  python: circleci/python@2.0.3
-jobs:
-  cfn-lint:
-    executor: python/default
-    steps:
-      - checkout
-      - run: pip install cfn-lint
-      - run:
-          name: run cfn-lint
-          command: cfn-lint -i W3002 -t cloudformation/*.yml
-            
-workflows:
-  raisetech:
-    jobs:
-      - cfn-lint
+W2001 Parameter PJPrefix not used.
+cloudformation/lecture10-alb.yml:2:3
 ```
-* version 2.1 
-Circleciを動かすymlファイルのバージョン。最新は2.1。
-* cfn-lint
-AWS CloudFormation テンプレートの検証に利用できるオープンソースツール。pythonパッケージである。pythonで書かれており、使用するにはpython環境が必要である。
-* orbs
-CircleCI の設定をパッケージとして公開し、再利用するための仕組み。
-今回は、Cfn-lintを使用するために、orbsにてpython環境を作り、pythonパッケージをインストールできるようにするために使用する。
-* jobs
-CircleCIでコマンドやスクリプトを実行するためのすべてのステップを含んでいる重要な要素。
-* executor
-ジョブが実行される環境を指定する。今回は、python/defaultを指定し、python環境を指定。定義されるジョブは固有のexecutorで実行される。
-* steps
-ジョブを完了させるために実行する必要があるアクション。通常は、実行可能なコマンドの集合。
-* checkoutステップ
-ソースコードをリポジトリから取得するステップ。
-* runステップ
-具体的にどんな動作を行うかを記述するステップ。
-今回は、pipでcfn-lintをインストールする動作と、cfn-lintコマンド-iオプション(ignore:無視する)でw3002(警告コード3002)を無視するオプションをつけて、cloudformationディレクトリ下の.ymlファイルを確認するコマンドを実行します。
-* w3002コードの意味
-プロパティがpackageコマンドでのみ機能する場合に警告を出す。ここでのプロパティはCloudFormationのymlファイルのテンプレートをさす。
-* name
-nameを付ける意味は任意のジョブの名前をつけて、ログに表示されるようにし、どのステップでなにをしているかわかりやすくするために付けています。
-今回は、run cfn-lintという名前で表示されるように設定しています。
-* workflows
-ジョブのリストとその実行順を定義します。ここでは、raisetechというワークフロー名が作成され、1番目にcfn-lintというジョブを定義します。
+lecture10-alb.ymlの2行目のパラメータ`PJPrefix`が使われていない
 
-[circleci公式youtube]()
+→確認した結果、出力通り使われていなかったので、コメントアウトして削除した。
 
+* 警告コードW1011
+```
+W1011 Use dynamic references over parameters for secrets
+cloudformation/lecture10-rds.yml:76:7
 
-[CI/CDプロセスにCloudFormationを本気導入するために考えるべきこと](https://speakerdeck.com/hamadakoji/cdpurosesunicloudformationwoben-qi-dao-ru-surutamenikao-erubekikoto?slide=55)
+# cfn-lint --list-rules コマンドより
+Instead of REFing a parameter for a secret use a dynamic reference. Solutions like SSM parameter store and secrets manager provide better security of sercrets
+```
+lecture10-rds.yml:76で機密情報のために動的参照を使ってください。
+SSMパラメータやsecretsmanagerのような解決方法は機密情報の安全性をよくしてくれます
 
-[Rules](https://github.com/aws-cloudformation/cfn-lint/blob/main/docs/rules.md)
+→テンプレート内で直接参照ではなく、SecretsManagerの動的参照を使用する記述に改善しました。RDS作成時にSecretsManagerによってマスタパスワードを生成して、取得します。
+```
+# 以下の記述をコメントアウトしました
+# DBPassword: 
+  #  Type: String
+  #  Default: "DBpassword"
+  #  NoEcho: true
+  #  MinLength: 8
+  #  MaxLength: 41
+  #  AllowedPattern: "[a-zA-Z0-9]*"
+  #  ConstraintDescription: "[must contain only alphanumeric  ]"
+  #  characters."
 
-[pipの使い方](https://envader.plus/course/8/scenario/1072)
-["This environment is externally managed"のエラーが出たとき、python仮想環境をつかう。](https://note.com/lucky_gerbil210/n/n0de8721c05bc)
+DBInstance: 
+    Type: "AWS::RDS::DBInstance"
+    Properties: 
+# 以下のパスワードの直接参照をコメントアウト
+# MasterUserPassword: !Ref DBPassword
 
-[pip で error:  externally-managed-environment が出てパッケージがインストールできない](https://scrapbox.io/bbr-software-memo/pip_%E3%81%A7_error:__externally-managed-environment_%E3%81%8C%E5%87%BA%E3%81%A6%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%8C%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84)
+# この部分をSecretsManagerで管理するように設定するため以下をコメントイン。
+# RDSとSecretsManagerは統合されたため、こちらのみでOK。
 
-</details>
+ManageMasterUserPassword: true
+```
 
-1. 動作確認結果
+[参考記事](https://zenn.dev/devcamp/articles/54ffd860025f64)
+
+* 警告コードW2001
+```
+W2001 Parameter SgEgFromPort1 not used.
+cloudformation/lecture10-sg.yml:30:3
+```
+lecture10-sg.ymlの30行目のパラメータ`SgEgFromPort1`が使われていない
+
+→確認した結果、`SgIngFromPort3`同じ記述がされていて、`SgEgFromPort1`が使われていなかったので１つをコメントアウトして削除しました。 
+
+* なお、第10回課題でCloudFormationの略称を’clf’と誤用していたため、テンプレートの一部を'CFn'に変更しています。
+
+### 2. 2回目の確認→Success(成功が表示)
+
+![](./lecture12/images/lecture12-4.png)
+
+![](./lecture12/images/lecture12-5.png)
+
+### 構成図
+
+* CloudFormationのcreateは第13回以降課題で実装します。
+
+![](./lecture12/images/lecture12-6.png) 
+
+### 感想
+* CI/CDツールを使用して、トリガーを指定して自動でコマンドを実行したり、構文を確認できることがわかりました。orbsを利用して、必要な環境を指定して、ローカルに開発環境がなくてもジョブを自動実行できることを学びました。13回以降では、CLIやansibleの環境をorbsに指定してジョブを定義すると思うので、orbsの指定はちゃんとやっていきたいと思います！
+
+* cfn-lintはvscodeの拡張子でvscode上でインストールするだけで自動実行できると思い込んでいたので、vscodeの開発環境でcfn-lintが動作せず、使われていないパラメータが検出されて動作が失敗するという事象が起きました。vscodeの拡張機能を使うときはちゃんと環境上で動作することを確認して使用したいです。
+
+* debian環境のlinuxではpip3でcfn-lintをインストールするのに、-m venvコマンドで任意のパスに仮想環境を作成して有効化してインストールすることを学びました。Python環境が「（externally-managed environment）外部管理環境」として設定されているため、pipでPython環境全体にインストールしようとしたら制限がかかりました。仮想環境を作成するのに最初わからずでしたが、１つ１つ英文を読んで、参考記事・サイトを探したら見つかったので備忘録としてまとめておきたいと思います。
+
+* ジョブやワークフローで名前を何をしたかわかりやすいものに定義しておくとどこが成功して、どこが失敗したかがわかるので、自分でもレビュー側もわかりやすいものをつけて特定できるようにしたいです。
