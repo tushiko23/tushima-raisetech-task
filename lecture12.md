@@ -100,6 +100,19 @@ lecture10-sg.ymlの30行目のパラメータ`SgEgFromPort1`が使われてい�
 
 ![](./lecture12/images/lecture12-5.png)
 
+### ローカルPCでCircleCIの設定ファイルのバリデーションを行う
+
+以下コマンドを実行して、確認する
+```
+circleci config validate
+```
+
+![](./lecture12/images/lecture12-7.png)
+
+ローカルPCにインストール手順
+
+[ローカル（サーバーや開発 PC）で実行できるCLIのセット方法](https://circleci.com/docs/ja/local-cli/)
+
 ### 構成図
 
 * CloudFormationのcreateは第13回以降課題で実装します。
