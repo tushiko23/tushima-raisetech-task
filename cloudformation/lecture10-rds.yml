@@ -40,15 +40,6 @@ Parameters:
     AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
     ConstraintDescription: "must begin with a letter and contain only alphanumeric characters."
     
-  DBPassword: 
-    Type: String
-    Default: "DBpassword"
-    NoEcho: true
-    MinLength: 8
-    MaxLength: 41
-    AllowedPattern: "[a-zA-Z0-9]*"
-    ConstraintDescription: "must contain only alphanumeric characters."
-
 # AvailabilityZoneを選択
   AvailabilityZone:
     Type: AWS::EC2::AvailabilityZone::Name
@@ -73,7 +64,7 @@ Resources:
       StorageType: !Ref DBInstanceStorageType
       DBName: !Ref DBName
       MasterUsername: !Ref DBMasterUserName
-      MasterUserPassword: !Ref DBPassword
+      ManageMasterUserPassword: true
       DBSubnetGroupName: !Ref DBSubnetGroup
       AvailabilityZone: !Ref AvailabilityZone
       PubliclyAccessible: false
@@ -101,5 +92,5 @@ Resources:
       DBSubnetGroupName: !Sub "${PJPrefix}-${DBInstanceName}-subnet"
       DBSubnetGroupDescription: "-"
       SubnetIds: 
-        - !ImportValue lecture10-clf-PrivateSubnet1id
-        - !ImportValue lecture10-clf-PrivateSubnet2id
+        - !ImportValue lecture10-CFn-PrivateSubnet1id
+        - !ImportValue lecture10-CFn-PrivateSubnet2id

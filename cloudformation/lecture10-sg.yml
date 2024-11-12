@@ -27,10 +27,6 @@ Parameters:
     Type: String
     Default: '80'
 
-  SgEgFromPort1:
-    Type: String
-    Default: '3306'
-
   SGName2:
     Type: String
     Default: "lecture10-sg02"
@@ -55,9 +51,9 @@ Resources:
   lecture10SG1:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: test-create
+      GroupDescription: create-ec2-sg
       GroupName: !Ref SGName1
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-CFn-VPCid
       Tags:
         - Key: "Name"
           Value: "lecture10"
@@ -65,9 +61,9 @@ Resources:
   lecture10SG2:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: test-create
+      GroupDescription: create-rds-sg
       GroupName: !Ref SGName2
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-CFn-VPCid
       Tags:
         - Key: "Name"
           Value: "lecture10"
@@ -116,9 +112,9 @@ Resources:
   lecture10SG3:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: test-create
+      GroupDescription: create-alb-sg
       GroupName: !Ref SGName3
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-CFn-VPCid
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref SgIngFromPort4

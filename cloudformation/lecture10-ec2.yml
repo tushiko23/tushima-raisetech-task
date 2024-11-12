@@ -17,7 +17,7 @@ Parameters:
   
   ProjectName:
     Type: String
-    Description: Lecture10-clf-EC2
+    Description: Lecture10-CFn-EC2
 
   EC2InstanceVolumeSize:
     Type: String
@@ -69,8 +69,8 @@ Resources:
         - Effect: Allow
           Action: "*"
           Resource:
-            - "arn:aws:s3:::<lecture10-clf-bucket>"
-            - "arn:aws:s3:::<lecture10-clf-bucket>/*"
+            - "arn:aws:s3:::<lecture10-CFn-bucket>"
+            - "arn:aws:s3:::<lecture10-CFn-bucket>/*"
       Roles:
       - !Ref S3AccessRole
   
@@ -84,7 +84,7 @@ Resources:
   # ------------------------------------------------------------
   #  EC2の作成
   # ------------------------------------------------------------   
-  Lecture10EC2clf:
+  Lecture10EC2CFn:
     Type: AWS::EC2::Instance
     Properties:
       BlockDeviceMappings:
@@ -99,7 +99,7 @@ Resources:
       NetworkInterfaces:
         - AssociatePublicIpAddress: true
           DeviceIndex: "0"
-          SubnetId: !ImportValue lecture10-clf-PublicSubnet1id
+          SubnetId: !ImportValue lecture10-CFn-PublicSubnet1id
           GroupSet:
             - !ImportValue "lecture10-sg-SG1-EC2"
       Tags:
@@ -117,16 +117,16 @@ Resources:
   IPAssoc:
     Type: AWS::EC2::EIPAssociation
     Properties:
-      InstanceId: !Ref Lecture10EC2clf
+      InstanceId: !Ref Lecture10EC2CFn
       EIP: !Ref ElasticIP
 
 Outputs:
   InstanceId:
     Description: The Instance ID
-    Value: !Ref Lecture10EC2clf
+    Value: !Ref Lecture10EC2CFn
     Export:
-      Name: Lecture10-EC2clf
+      Name: Lecture10-EC2CFn
 
   InstancePublicIp:
     Description: The public IP address of the EC2 instance
-    Value: !GetAtt Lecture10EC2clf.PublicIp
+    Value: !GetAtt Lecture10EC2CFn.PublicIp

@@ -5,7 +5,7 @@ Parameters:
   NameBase: 
     Description: this is base name.
     Type: String
-    Default: lecture10-clf
+    Default: lecture10-CFn
 
   # VPC
   VpcCIDR:
