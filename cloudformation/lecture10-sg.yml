@@ -135,7 +135,7 @@ Outputs:
     Description: "ID of the second security group"
     Value: !Ref lecture10SG2
     Export:
-      Name: !Sub "${NameBase}-SG1-RDS"
+      Name: !Sub "${NameBase}-SG2-RDS"
 
   SecurityGroup3Id:
     Description: "ID of the third security group"
