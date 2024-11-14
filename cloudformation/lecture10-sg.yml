@@ -86,7 +86,7 @@ Resources:
       ToPort: !Ref SgIngFromPort2
       CidrIp: !Ref SgIngCidrIp2
 
-  SG1Egress1:
+  SG1Egress:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId: !Ref lecture10SG1
@@ -102,7 +102,7 @@ Resources:
       ToPort: !Ref SgIngFromPort3
       SourceSecurityGroupId: !Ref lecture10SG1
 
-  SG2Egress1:
+  SG2Egress:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId: !Ref lecture10SG2
@@ -115,15 +115,26 @@ Resources:
       GroupDescription: create-alb-sg
       GroupName: !Ref SGName3
       VpcId: !ImportValue lecture10-CFn-VPCid
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: !Ref SgIngFromPort4
-          ToPort: !Ref SgIngFromPort4
-          CidrIp: !Ref SgIngCidrIp4
       Tags:
         - Key: "Name"
           Value: "lecture10"
-
+  
+  SG3Ingress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref lecture10SG3
+      IpProtocol: tcp
+      FromPort: !Ref SgIngFromPort4
+      ToPort: !Ref SgIngFromPort4
+      CidrIp: !Ref SgIngCidrIp4
+  
+  SG3Egress:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref lecture10SG3
+      IpProtocol: -1
+      CidrIp: 0.0.0.0/0
+      
 Outputs:
   SecurityGroup1Id:
     Description: "ID of the first security group"
