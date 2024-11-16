@@ -13,7 +13,7 @@ Parameters:
 
   SgIngCidrIp1:
     Type: String
-    Default: 'Your IP Address'
+    Default: 'My IP'  
 
   SgIngFromPort1:
     Type: String
@@ -38,14 +38,6 @@ Parameters:
   SGName3:
     Type: String
     Default: "lecture10-sg03"
-
-  SgIngCidrIp4:
-    Type: String
-    Default: '0.0.0.0/0'
-
-  SgIngFromPort4:
-    Type: String
-    Default: '80'
 
 Resources:
   lecture10SG1:
@@ -77,6 +69,8 @@ Resources:
       ToPort: !Ref SgIngFromPort1
       CidrIp: !Ref SgIngCidrIp1
 
+
+
   SG1Ingress2:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -86,7 +80,7 @@ Resources:
       ToPort: !Ref SgIngFromPort2
       CidrIp: !Ref SgIngCidrIp2
 
-  SG1Egress:
+  SG1Egress1:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId: !Ref lecture10SG1
@@ -102,7 +96,7 @@ Resources:
       ToPort: !Ref SgIngFromPort3
       SourceSecurityGroupId: !Ref lecture10SG1
 
-  SG2Egress:
+  SG2Egress1:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId: !Ref lecture10SG2
@@ -118,23 +112,23 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "lecture10"
-  
-  SG3Ingress:
+
+  SG3Ingress1:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
       GroupId: !Ref lecture10SG3
       IpProtocol: tcp
-      FromPort: !Ref SgIngFromPort4
-      ToPort: !Ref SgIngFromPort4
-      CidrIp: !Ref SgIngCidrIp4
-  
-  SG3Egress:
+      FromPort: !Ref SgIngFromPort2
+      ToPort: !Ref SgIngFromPort2
+      CidrIp: !Ref SgIngCidrIp2
+
+  SG2Egress3:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId: !Ref lecture10SG3
       IpProtocol: -1
       CidrIp: 0.0.0.0/0
-      
+
 Outputs:
   SecurityGroup1Id:
     Description: "ID of the first security group"
@@ -146,10 +140,11 @@ Outputs:
     Description: "ID of the second security group"
     Value: !Ref lecture10SG2
     Export:
-      Name: !Sub "${NameBase}-SG2-RDS"
+      Name: !Sub "${NameBase}-SG1-RDS"
 
   SecurityGroup3Id:
     Description: "ID of the third security group"
     Value: !Ref lecture10SG3
     Export:
       Name: !Sub "${NameBase}-SG3-ALB"
+      
