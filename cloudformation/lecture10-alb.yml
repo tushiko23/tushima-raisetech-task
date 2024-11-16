@@ -1,6 +1,4 @@
 Parameters:
-
-  #InternetALB
   ALBName:
     Type: String
     Default: "lecture10-CFn"
@@ -10,25 +8,21 @@ Parameters:
     Default: "ipv4"
 
 Resources:
-
-  #=================================
-  # ターゲットグループの作成
-  #=================================       
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub ${ALBName}-tg
+      Name: !Sub "${ALBName}-tg"
       Tags:
         - Key: Name
-          Value: !Sub ${ALBName}-tg
+          Value: !Sub "${ALBName}-tg"
       Port: 80
       Protocol: HTTP
       Matcher:
         HttpCode: '200'
-      VpcId: !ImportValue lecture10-CFn-VPCid
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
       TargetType: instance
       Targets:
-        - Id: !ImportValue Lecture10-EC2CFn
+        - Id: !ImportValue "Lecture10-EC2CFn"
 
   #=================================
   # ALBの作成
@@ -38,16 +32,17 @@ Resources:
     Properties:
       Type: "application"
       Scheme: "internet-facing"
-      Name: !Sub ${ALBName}-alb
+      Name: !Sub "${ALBName}-alb"
       IpAddressType: !Ref IpAddressType
       Subnets:
-        - !ImportValue lecture10-CFn-PublicSubnet1id
-        - !ImportValue lecture10-CFn-PublicSubnet2id
+        - !ImportValue "lecture10-CFn-PublicSubnet1id"
+        - !ImportValue "lecture10-CFn-PublicSubnet2id"
       SecurityGroups:
         - !ImportValue "lecture10-sg-SG3-ALB"
       Tags:
         - Key: Name
-          Value: !Sub ${ALBName}-alb
+          Value: !Sub "${ALBName}-alb"
+
   #=================================
   # ALBをターゲットグループに関連付け
   #================================= 
@@ -59,4 +54,4 @@ Resources:
           TargetGroupArn: !Ref TargetGroup
       LoadBalancerArn: !Ref ALB
       Port: 80
-      Protocol: HTTP    
+      Protocol: HTTP
