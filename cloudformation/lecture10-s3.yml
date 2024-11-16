@@ -10,10 +10,11 @@ Parameters:
     Description: System Name
     Type: String
 
+
   #-----------------------------------------------------------------------------
   # S3 bucket
   #-----------------------------------------------------------------------------
-Resources:
+Resources:  
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
