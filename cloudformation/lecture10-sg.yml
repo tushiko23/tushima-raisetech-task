@@ -1,0 +1,147 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Security Group Creation Stack"
+
+Parameters:
+  NameBase:
+    Description: "this is base name"
+    Type: String
+    Default: lecture10-sg
+
+  SGName1:
+    Type: String
+    Default: 'lecture10-sg01'
+
+  SgIngCidrIp1:
+    Type: String
+    Default: 'My IP'  
+
+  SgIngFromPort1:
+    Type: String
+    Default: '22'
+
+  SgIngCidrIp2:
+    Type: String
+    Default: '0.0.0.0/0'
+
+  SgIngFromPort2:
+    Type: String
+    Default: '80'
+
+  SGName2:
+    Type: String
+    Default: "lecture10-sg02"
+
+  SgIngFromPort3:
+    Type: String
+    Default: '3306'
+
+  SGName3:
+    Type: String
+    Default: "lecture10-sg03"
+
+Resources:
+  lecture10SG1:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: create-ec2-sg
+      GroupName: !Ref SGName1
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
+      Tags:
+        - Key: "Name"
+          Value: "lecture10"
+
+  lecture10SG2:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: create-rds-sg
+      GroupName: !Ref SGName2
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
+      Tags:
+        - Key: "Name"
+          Value: "lecture10"
+
+  SG1Ingress1:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref lecture10SG1
+      IpProtocol: tcp
+      FromPort: !Ref SgIngFromPort1
+      ToPort: !Ref SgIngFromPort1
+      CidrIp: !Ref SgIngCidrIp1
+
+  SG1Ingress2:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref lecture10SG1
+      IpProtocol: tcp
+      FromPort: !Ref SgIngFromPort2
+      ToPort: !Ref SgIngFromPort2
+      CidrIp: !Ref SgIngCidrIp2
+
+  SG1Egress1:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref lecture10SG1
+      IpProtocol: -1
+      CidrIp: 0.0.0.0/0
+
+  SG2Ingress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref lecture10SG2
+      IpProtocol: tcp
+      FromPort: !Ref SgIngFromPort3
+      ToPort: !Ref SgIngFromPort3
+      SourceSecurityGroupId: !Ref lecture10SG1
+
+  SG2Egress1:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref lecture10SG2
+      IpProtocol: -1
+      CidrIp: 0.0.0.0/0
+
+  lecture10SG3:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: create-alb-sg
+      GroupName: !Ref SGName3
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
+      Tags:
+        - Key: "Name"
+          Value: "lecture10"
+
+  SG3Ingress1:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref lecture10SG3
+      IpProtocol: tcp
+      FromPort: !Ref SgIngFromPort2
+      ToPort: !Ref SgIngFromPort2
+      CidrIp: !Ref SgIngCidrIp2
+
+  SG2Egress3:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref lecture10SG3
+      IpProtocol: -1
+      CidrIp: 0.0.0.0/0
+
+Outputs:
+  SecurityGroup1Id:
+    Description: "ID of the first security group"
+    Value: !Ref lecture10SG1
+    Export:
+      Name: !Sub "${NameBase}-SG1-EC2"
+
+  SecurityGroup2Id:
+    Description: "ID of the second security group"
+    Value: !Ref lecture10SG2
+    Export:
+      Name: !Sub "${NameBase}-SG1-RDS"
+
+  SecurityGroup3Id:
+    Description: "ID of the third security group"
+    Value: !Ref lecture10SG3
+    Export:
+      Name: !Sub "${NameBase}-SG3-ALB"

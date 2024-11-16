@@ -1,0 +1,175 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "lecture10-cloudformation"
+
+Parameters:
+  NameBase: 
+    Description: "this is base name"
+    Type: String
+    Default: lecture10-CFn
+
+  # VPC
+  VpcCIDR:
+    Type: String
+    Default: '10.0.0.0/16'
+
+  # PublicSubnet
+  PubSubCIDR1:
+    Type: String
+    Default: '10.0.0.0/20'
+
+  PubSubAZ1:
+    Type: String
+    Default: 'ap-northeast-1a'
+
+  PubSubCIDR2:
+    Type: String
+    Default: '10.0.16.0/20'
+  
+  PubSubAZ2:
+    Type: String
+    Default: 'ap-northeast-1c'
+
+  # PrivateSubnet
+  PriSubCIDR1:
+    Type: String
+    Default: '10.0.128.0/20'
+  
+  PriSubAZ1:
+    Type: String
+    Default: 'ap-northeast-1a'
+
+  PriSubCIDR2:
+    Type: String
+    Default: '10.0.144.0/20'
+  
+  PriSubAZ2:
+    Type: String
+    Default: 'ap-northeast-1c'
+
+Resources:
+  TestVPC:              
+    Type: AWS::EC2::VPC         
+    Properties:             
+      CidrBlock: !Ref VpcCIDR
+      InstanceTenancy: default
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-VPC"
+
+  #=================================
+  # インターネットゲートウェイの作成
+  #=================================
+  TestInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-InternetGateway"
+
+  TestAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref TestInternetGateway
+      VpcId: !Ref TestVPC
+
+  # ------------------------------------------------------------
+  #  Subnetの作成
+  # ------------------------------------------------------------
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Ref PubSubAZ1
+      CidrBlock: !Ref PubSubCIDR1
+      MapPublicIpOnLaunch: true
+      VpcId: !Ref TestVPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-PublicSubnet1"
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Ref PubSubAZ2
+      CidrBlock: !Ref PubSubCIDR2
+      MapPublicIpOnLaunch: 'true'
+      VpcId: !Ref TestVPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-PublicSubnet2"
+
+  PrivateSubnet1:      
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Ref PriSubAZ1
+      CidrBlock: !Ref PriSubCIDR1
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref TestVPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-PrivateSubnet1"
+
+  PrivateSubnet2:      
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Ref PriSubAZ2
+      CidrBlock: !Ref PriSubCIDR2
+      MapPublicIpOnLaunch: false
+      VpcId: !Ref TestVPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-PrivateSubnet2"
+
+  # ------------------------------------------------------------
+  #  ルートテーブルの作成
+  # ------------------------------------------------------------
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref TestVPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-PublicRouteTable"
+
+  RoutePublic:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref TestInternetGateway
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref TestVPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${NameBase}-PrivateRouteTable"
+
+  # ------------------------------------------------------------
+  #  ルートテーブルをサブネットに関連付け
+  # ------------------------------------------------------------       
+  RouteTableAssocPublic1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  RouteTableAssocPublic2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  RouteTableAssocPrivate1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+
+  RouteTableAssocPrivate2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable

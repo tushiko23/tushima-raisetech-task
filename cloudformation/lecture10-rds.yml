@@ -1,0 +1,95 @@
+Parameters:
+  PJPrefix: 
+    Type: String
+    Default: "lecture10"
+
+  DBInstanceName:
+    Type: String
+    Default: "rds"
+
+  MySQLMajorVersion:
+    Type: String
+    Default: "8.0"
+    AllowedValues: [ "8.0", "8.1", "8.2" ]
+
+  MySQLMinorVersion:
+    Type: String
+    Default: "35"
+
+  DBInstanceClass:
+    Type: String
+    Default: "db.t3.micro"
+
+  DBInstanceStorageSize:
+    Type: String
+    Default: "30"
+
+  DBInstanceStorageType:
+    Type: String
+    Default: "gp2"
+
+  DBName:
+    Type: String
+    Default: "database1"
+
+  DBMasterUserName:
+    Type: String
+    Default: "DBUserName"
+    NoEcho: true
+    MinLength: 1
+    MaxLength: 16
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription: "must begin with a letter and contain only alphanumeric characters."
+
+  AvailabilityZone:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: "ap-northeast-1a"
+
+  MultiAZ: 
+    Type: String
+    Default: "false"
+    AllowedValues: [ "true", "false" ]
+
+# ------------------------------------------------------------#
+#  DBサブネットグループの作成
+# ------------------------------------------------------------#
+Resources:
+  DBSubnetGroup: 
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupName: !Sub "${PJPrefix}-${DBInstanceName}-subnet"
+      DBSubnetGroupDescription: "-"
+      SubnetIds: 
+        - !ImportValue lecture10-CFn-PrivateSubnet1id
+        - !ImportValue lecture10-CFn-PrivateSubnet2id
+
+# ------------------------------------------------------------#
+#  DBInstance MySQLの作成
+# ------------------------------------------------------------#
+  DBInstance: 
+    Type: "AWS::RDS::DBInstance"
+    Properties: 
+      DBInstanceIdentifier: !Sub "${PJPrefix}-${DBInstanceName}"
+      Engine: MySQL
+      EngineVersion: !Sub "${MySQLMajorVersion}.${MySQLMinorVersion}"
+      DBInstanceClass: !Ref DBInstanceClass
+      AllocatedStorage: !Ref DBInstanceStorageSize
+      StorageType: !Ref DBInstanceStorageType
+      DBName: !Ref DBName
+      MasterUsername: !Ref DBMasterUserName
+      ManageMasterUserPassword: true
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      AvailabilityZone: !Ref AvailabilityZone
+      PubliclyAccessible: false
+      MultiAZ: !Ref MultiAZ
+      PreferredBackupWindow: "18:00-18:30"
+      PreferredMaintenanceWindow: "sat:19:00-sat:19:30"
+      AutoMinorVersionUpgrade: false  
+      VPCSecurityGroups:
+        - !ImportValue "lecture10-sg-SG1-RDS"
+      CopyTagsToSnapshot: true
+      BackupRetentionPeriod: 7
+      Tags: 
+        - Key: "Name"
+          Value: !Ref DBInstanceName
+    DeletionPolicy: "Delete"
