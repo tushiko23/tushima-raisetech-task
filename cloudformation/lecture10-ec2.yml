@@ -73,6 +73,7 @@ Resources:
             - "arn:aws:s3:::<lecture10-CFn-bucket>/*"
       Roles:
       - !Ref S3AccessRole
+
   
   S3AccessInstanceProfile:
     Type: AWS::IAM::InstanceProfile
