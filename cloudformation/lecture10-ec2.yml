@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Create an EC2 instance with a key pair
+Description: "Create an EC2 instance with a key pair"
 
 Parameters:
   
@@ -9,7 +9,7 @@ Parameters:
   
   InstanceTypeParameter:
     Type: String
-    Default: t2.micro
+    Default: "t2.micro"
     AllowedValues:
       - t2.nano
       - t2.micro
@@ -128,6 +128,6 @@ Outputs:
       Name: "Lecture10-EC2CFn"
   InstancePublicIp:
     Description: "The public IP address of the EC2 instance"
-    Value: !GetAtt Lecture10EC2CFn.PublicIp
+    Value: !GetAtt "Lecture10EC2CFn.PublicIp"
     Export:
       Name: "Lecture10-public-IP-CFn"
