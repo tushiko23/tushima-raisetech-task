@@ -18,6 +18,11 @@ Parameters:
   ProjectName:
     Type: String
     Description: Lecture10-CFn-EC2
+  
+  EC2InstanceAMI:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    Description: The AMI ID for the EC2 instance
 
   EC2InstanceVolumeSize:
     Type: String
@@ -26,31 +31,26 @@ Parameters:
   EC2InstanceVolumeType:
     Type: String
     Default: "gp2"
-  
-  EC2InstanceAMI:
-    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-    Default: "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
-    Description: The AMI ID for the EC2 instance
 
-Resources:
 #-----------------------------------------------------------------------------
 # IAM Role to access S3 Bucket
 #-----------------------------------------------------------------------------
+Resources: 
   S3AccessRole:
     Type: "AWS::IAM::Role"
     Properties:
+      RoleName: "IAMRole"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement: 
-          - 
-            Effect: "Allow"
+          - Effect: "Allow"
             Principal: 
               Service: 
                 - "ec2.amazonaws.com"
             Action: 
               - "sts:AssumeRole"
       Path: "/"
-  
+
   AccessPolicies:
     Type: AWS::IAM::Policy
     Properties:
@@ -58,7 +58,7 @@ Resources:
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
-        - Effect: Allow
+        - Effect: "Allow"
           Action:
               - s3:GetObject
               - s3:PutObject
@@ -66,14 +66,13 @@ Resources:
               - s3:DeleteObject
               - s3:GetBucketLocation
           Resource: "arn:aws:s3:::*"
-        - Effect: Allow
+        - Effect: "Allow"
           Action: "*"
           Resource:
-            - "arn:aws:s3:::<lecture10-CFn-bucket>"
-            - "arn:aws:s3:::<lecture10-CFn-bucket>/*"
+            - "arn:aws:s3:::<lecture10-cfn-bucket>"
+            - "arn:aws:s3:::<lecture10-cfn-bucket>/*"
       Roles:
       - !Ref S3AccessRole
-
   
   S3AccessInstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -88,11 +87,6 @@ Resources:
   Lecture10EC2CFn:
     Type: AWS::EC2::Instance
     Properties:
-      BlockDeviceMappings:
-        - DeviceName: /dev/sdb
-          Ebs:
-            VolumeSize: !Ref EC2InstanceVolumeSize
-            VolumeType: !Ref EC2InstanceVolumeType
       IamInstanceProfile: !Ref S3AccessInstanceProfile
       InstanceType: !Ref InstanceTypeParameter
       ImageId: !Ref EC2InstanceAMI
@@ -103,13 +97,18 @@ Resources:
           SubnetId: !ImportValue lecture10-CFn-PublicSubnet1id
           GroupSet:
             - !ImportValue "lecture10-sg-SG1-EC2"
+      BlockDeviceMappings:
+        - DeviceName: /dev/sdb
+          Ebs:
+            VolumeSize: !Ref EC2InstanceVolumeSize
+            VolumeType: !Ref EC2InstanceVolumeType
       Tags:
         - Key: Name
           Value: !Ref ProjectName
-      
-  # ------------------------------------------------------------
-  #  ElasticIPの作成&EC2にアタッチ
-  # ------------------------------------------------------------ 
+
+# ------------------------------------------------------------
+#  ElasticIPの作成&EC2にアタッチ
+# ------------------------------------------------------------ 
   ElasticIP:
     Type: "AWS::EC2::EIP"
     Properties:
@@ -123,11 +122,12 @@ Resources:
 
 Outputs:
   InstanceId:
-    Description: The Instance ID
+    Description: "The Instance ID"
     Value: !Ref Lecture10EC2CFn
     Export:
-      Name: Lecture10-EC2CFn
-
+      Name: "Lecture10-EC2CFn"
   InstancePublicIp:
-    Description: The public IP address of the EC2 instance
+    Description: "The public IP address of the EC2 instance"
     Value: !GetAtt Lecture10EC2CFn.PublicIp
+    Export:
+      Name: "Lecture10-public-IP-CFn"
