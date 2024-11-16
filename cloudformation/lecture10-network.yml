@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: lecture10-cloudformation
+Description: "lecture10-cloudformation"
 
 Parameters:
   NameBase: 
-    Description: this is base name.
+    Description: "this is base name"
     Type: String
     Default: lecture10-CFn
 
@@ -56,7 +56,7 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-VPC
+          Value: !Sub "${NameBase}-VPC"
 
   #=================================
   # インターネットゲートウェイの作成
@@ -66,7 +66,7 @@ Resources:
     Properties:
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-InternetGateway
+          Value: !Sub "${NameBase}-InternetGateway"
 
   TestAttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -82,11 +82,11 @@ Resources:
     Properties:
       AvailabilityZone: !Ref PubSubAZ1
       CidrBlock: !Ref PubSubCIDR1
-      MapPublicIpOnLaunch: 'true'
+      MapPublicIpOnLaunch: true
       VpcId: !Ref TestVPC
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-PublicSubnet1
+          Value: !Sub "${NameBase}-PublicSubnet1"
 
   PublicSubnet2:
     Type: AWS::EC2::Subnet
@@ -97,29 +97,29 @@ Resources:
       VpcId: !Ref TestVPC
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-PublicSubnet2
+          Value: !Sub "${NameBase}-PublicSubnet2"
 
   PrivateSubnet1:      
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: !Ref PriSubAZ1
       CidrBlock: !Ref PriSubCIDR1
-      MapPublicIpOnLaunch: 'false'
+      MapPublicIpOnLaunch: false
       VpcId: !Ref TestVPC
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-PrivateSubnet1
+          Value: !Sub "${NameBase}-PrivateSubnet1"
 
   PrivateSubnet2:      
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: !Ref PriSubAZ2
       CidrBlock: !Ref PriSubCIDR2
-      MapPublicIpOnLaunch: 'false'
+      MapPublicIpOnLaunch: false
       VpcId: !Ref TestVPC
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-PrivateSubnet2
+          Value: !Sub "${NameBase}-PrivateSubnet2"
 
   # ------------------------------------------------------------
   #  ルートテーブルの作成
@@ -130,7 +130,7 @@ Resources:
       VpcId: !Ref TestVPC
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-PublicRouteTable
+          Value: !Sub "${NameBase}-PublicRouteTable"
 
   RoutePublic:
     Type: AWS::EC2::Route
@@ -145,7 +145,7 @@ Resources:
       VpcId: !Ref TestVPC
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-PrivateRouteTable
+          Value: !Sub "${NameBase}-PrivateRouteTable"
 
   # ------------------------------------------------------------
   #  ルートテーブルをサブネットに関連付け
@@ -173,4 +173,3 @@ Resources:
     Properties:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable
-      
