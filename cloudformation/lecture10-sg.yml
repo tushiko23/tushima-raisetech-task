@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Security Group Creation Stack
+Description: "Security Group Creation Stack"
 
 Parameters:
   NameBase:
-    Description: this is base name.
+    Description: "this is base name"
     Type: String
     Default: lecture10-sg
 
@@ -45,7 +45,7 @@ Resources:
     Properties:
       GroupDescription: create-ec2-sg
       GroupName: !Ref SGName1
-      VpcId: !ImportValue lecture10-CFn-VPCid
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
       Tags:
         - Key: "Name"
           Value: "lecture10"
@@ -55,7 +55,7 @@ Resources:
     Properties:
       GroupDescription: create-rds-sg
       GroupName: !Ref SGName2
-      VpcId: !ImportValue lecture10-CFn-VPCid
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
       Tags:
         - Key: "Name"
           Value: "lecture10"
@@ -106,7 +106,7 @@ Resources:
     Properties:
       GroupDescription: create-alb-sg
       GroupName: !Ref SGName3
-      VpcId: !ImportValue lecture10-CFn-VPCid
+      VpcId: !ImportValue "lecture10-CFn-VPCid"
       Tags:
         - Key: "Name"
           Value: "lecture10"
