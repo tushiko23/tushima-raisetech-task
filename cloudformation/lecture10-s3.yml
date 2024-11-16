@@ -5,7 +5,7 @@ Parameters:
   OrganizationName:
     Description: Organization Name
     Type: String
-  
+
   SystemName:
     Description: System Name
     Type: String
@@ -36,4 +36,3 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub "${OrganizationName}-${SystemName}-bucket"
-          
