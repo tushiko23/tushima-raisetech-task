@@ -147,4 +147,3 @@ Outputs:
     Value: !Ref lecture10SG3
     Export:
       Name: !Sub "${NameBase}-SG3-ALB"
-      
