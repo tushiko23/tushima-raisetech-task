@@ -173,3 +173,31 @@ Resources:
     Properties:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable
+
+Outputs:
+  VPC:
+    Value: !Ref  TestVPC
+    Export:
+      Name: !Sub  ${NameBase}-VPCid
+
+  
+  PublicSubnet1:
+    Value: !Ref  PublicSubnet1  
+    Export:
+      Name: !Sub ${NameBase}-PublicSubnet1id
+
+  PublicSubnet2:
+    Value: !Ref  PublicSubnet2  
+    Export:
+      Name: !Sub ${NameBase}-PublicSubnet2id
+
+  
+  PrivateSubnet1:
+    Value: !Ref  PublicSubnet1  
+    Export:
+      Name: !Sub ${NameBase}-PrivateSubnet1id
+
+  PrivateSubnet2:
+    Value: !Ref  PublicSubnet2  
+    Export:
+      Name: !Sub ${NameBase}-PrivateSubnet2id
