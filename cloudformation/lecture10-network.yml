@@ -193,11 +193,11 @@ Outputs:
 
   
   PrivateSubnet1:
-    Value: !Ref  PublicSubnet1  
+    Value: !Ref  PrivateSubnet1  
     Export:
       Name: !Sub ${NameBase}-PrivateSubnet1id
 
   PrivateSubnet2:
-    Value: !Ref  PublicSubnet2  
+    Value: !Ref  PrivateSubnet2  
     Export:
       Name: !Sub ${NameBase}-PrivateSubnet2id
