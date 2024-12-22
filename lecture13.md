@@ -138,7 +138,8 @@ SSHKeys
 
 * Ansible及びServerSpecの実行の際に使用
 
-3. その他
+### その他
+
 #### 実行環境
 
 * 今回は**development環境**を想定してデプロイします。
