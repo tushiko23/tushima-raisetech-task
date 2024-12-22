@@ -2,8 +2,10 @@
 ## 課題内容
 CloudFormationとAnsibleとCircleCIでRailsアプリケーションの自動デプロイを行い,ServerSpecでアプリケーションのデプロイサーバに指定のテストをして成功することを確認する
 今回自動化に使用したレポジトリ[]()
+
 今回デプロイする簡単なCRUD処理ができるRailsアプリケーション
-![](https://lecture13-evdence-app.s3.ap-northeast-1.amazonaws.com/Screen+recording+2024-12-22+12.32.39.webm)
+
+![こちら](https://lecture13-evdence-app.s3.ap-northeast-1.amazonaws.com/Screen+recording+2024-12-22+12.32.39.webm)
 
 Railsアプリケーションのソースコード[raisetech-live8-sample-app](https://github.com/yuta-ushijima/raisetech-live8-sample-app)
 
