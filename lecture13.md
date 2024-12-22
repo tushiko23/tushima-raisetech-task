@@ -5,7 +5,7 @@ CloudFormationとAnsibleとCircleCIでRailsアプリケーションの自動デ�
 
 今回デプロイする簡単なCRUD処理ができるRailsアプリケーション
 
-![アプリケーションの操作映像はこちら](https://lecture13-evdence-app.s3.ap-northeast-1.amazonaws.com/Screen+recording+2024-12-22+21.25.34.webm)
+[アプリケーションの操作映像はこちら](https://lecture13-evdence-app.s3.ap-northeast-1.amazonaws.com/Screen+recording+2024-12-22+21.25.34.webm)
 
 Railsアプリケーションのソースコード[raisetech-live8-sample-app](https://github.com/yuta-ushijima/raisetech-live8-sample-app)
 
