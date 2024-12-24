@@ -1,6 +1,6 @@
-# 　tushima-raisetech-task
+# RailsアプリケーションをCloudFormationとAnsibleとCircleCIで行い,ServerSpecでアプリケーションのデプロイサーバに指定のテストをして成功することを確認する
 
-## raisetechの第10回講義の課題進行中
+## 構成図
 
-
+![](lecture13/images/01_AWS_Architecture_Diagram.png)
 
