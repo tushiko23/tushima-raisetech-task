@@ -1,4 +1,4 @@
-# Railsアプリケーションをテスト駆動開発「TestDrivenDevelopment:TDD」に基づいて、自動デプロイ&自動稼働する
+# Railsアプリケーションを CloudFormation Ansible CircleCI を用いて、自動デプロイ&自動稼働し、ServerSpecで自動テストをする
 
 * 下記の構成図のインフラ構成でRailsアプリケーションを自動デプロイ&自動稼働し、ServerSpecにてテストをします。
 * 今回使用するRailsアプリケーションのデプロイ時のイメージとソースコードは下記を参照にしてください。
@@ -68,4 +68,11 @@
   1. 優れた耐久性・可用性で低コストで利用できる(データ喪失はほぼ発生しない)
   2. 権限管理が柔軟にでき,データの公開やアクセス管理を細かく設定できるため。
   3. スケーラブルな容量無制限のストレージであるため
+
+### 学習記録
+
+|講義|学習内容|課題の記録|備考|
+|---|-----|-----|-----|
+|第1回|学習のマインドセット<br>AWSアカウントの作成<br>IAMの推薦設定<br>Cloud9の作成&Rubyにて"HelloWorld"の出力|リポジトリにはなし|AdministratorAccess 権限の IAM ユーザーを作成→以後の課題ではこのIAMユーザを使用します|
+|第2回|バージョン管理システム "github"の使い方<br>MarkDown記法|[lecture2.md](./lecture2.md)|学習記録用リポジトリは今後、[tushima-raisetech-task](https://github.com/tushiko23/tushima-raisetech-task)に記録します|
 
