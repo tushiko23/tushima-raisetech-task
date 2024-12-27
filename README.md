@@ -30,7 +30,7 @@
   1. 非エージェント型のツールで,エージェントと呼ばれる通信を行う為のモジュールを事前に導入が不要である
   2. YAMLファイルが理解できれば実装できる
 * 類似サービス: Chef、Puppet など
-3. **CI/CDツール(「Continuous Integration/Continuous Delivery)** → **CircleCI**
+3. **CI/CDツール(Continuous Integration/Continuous Delivery)** → **CircleCI**
 * 役割:  ソフトウェアの開発プロセス(今回は,CloudFormation,Ansible,ServerSpecの実行及び更新)において、コードの変更を常にテストし、自動で本番環境に適用する。
 * 選定理由:
   1. 環境構築のコストが低く、手軽に導入できる
@@ -97,6 +97,5 @@
 #### その他の学習記録
 |学習内容|学習記録|備考|
 |-----|-----|-----|
-|AWSClIの使用|第4回・第5回環境をAWSCLIで作成<br>[作成したもの](https://github.com/tushiko23/CLI-AWS/tree/modify)||
-|IaCツールTerraformの使用|第4回・第5回環境をTerraformにて構築<br>[作成したもの](https://github.com/tushiko23/terraform-AWS/tree/git-lecture)|コードと説明は更新途中なので更新予定|
-|SAA取得|取得のエビデンス||
+|AWSCLIの使用|第4回・第5回環境をAWSCLIで作成<br>[作成したもの](https://github.com/tushiko23/CLI-AWS/tree/modify)||
+|IaCツールTerraformの使用|第4回・第5回環境をTerraformにて構築<br>[作成したもの](https://github.com/tushiko23/terraform-AWS/tree/git-lecture)|コードと説明は更新途中なので随時更新予定|
