@@ -42,13 +42,7 @@ GemfIleに gem "aws-sdk-s3", require: false を追加する
 
 - ~~storage.ymlアクセスキー情報を環境変数で記述~~→IAMロールで権限設定しているので設定不要。
 
-```sh
-amazon:
-service: S3
-region: ap-northeast-1
-access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
-secret_access_key:  <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
-```
+追加設定
 
 - S3バケット名を環境変数の設定
 ```sh
