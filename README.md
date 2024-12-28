@@ -69,7 +69,7 @@
   2. 権限管理が柔軟にでき,データの公開やアクセス管理を細かく設定できるため。
   3. スケーラブルな容量無制限のストレージであるため
 
-### 学習記録
+## 学習記録
 
 [Buildupでの日々の学習記録](https://app.build-up.info/enterprises/bEDI6AXZ/portfolio/bQO5AjMgoTd)
 
@@ -77,12 +77,12 @@
 
 |講義|学習内容|課題内容と記録|備考|
 |---|-----|-----|-----|
-|第1回|学習のマインドセット<br>AWSアカウント作成<br>IAMユーザの作成・推薦設定<br>Cloud9の作成|Cloud9環境下のRubyにて"HelloWorld"の出力<br>※リポジトリにはなし|AdministratorAccess 権限の IAM ユーザーを作成→以後の課題ではこのIAMユーザを使用します|
-|第2回|バージョン管理システム "github"の使い方<br>MarkDown記法|Githubにて、Pull Request の発行と完了報告<br>[lecture2.md](./lecture2.md)|学習記録用リポジトリは今後、[tushima-raisetech-task](https://github.com/tushiko23/tushima-raisetech-task)に記録します|
+|第1回|学習のマインドセット<br>AWSアカウント作成<br>IAMユーザの作成・推薦設定<br>Cloud9の作成|ルートユーザーとIAMユーザーをMFA有効化<br>BillingをIAMユーザで閲覧できるように設定<br>Cloud9環境下のRubyにて"HelloWorld"の出力<br>※リポジトリにはなし|AdministratorAccess 権限の IAM ユーザーを作成→以後の課題ではこのIAMユーザを使用します|
+|第2回|バージョン管理システム "github"の使い方<br>MarkDown記法|Githubにて、Pull Request の発行と完了報告<br>MergeとCollaboratorへの追加の仕方<br>[lecture2.md](./lecture2.md)|学習記録用リポジトリは今後、[tushima-raisetech-task](https://github.com/tushiko23/tushima-raisetech-task)に記録します|
 |第3回|Webアプリケーションが稼働する仕組み<br>APPサーバ・DBサーバ<br>構成管理ツール|Cloud9環境でRailsアプリケーションを手動構築でデプロイ<br>[lecture3.md](./lecture3-images.md)||
-|第4回|IAMでの権限管理<br>マネジメントコンソールにてAWS環境手動構築|VPC・サブネットをはじめとするネットワークの構築<br>キーペア・EC2・RDSの作成<br>SSH接続・EC2からRDSに接続確認<br>[lecture4.md](./lecture-4-modify.md)|今回は、Cloud9環境下からEC2にSSH接続していますが、第5回以降はローカルPCからSSH接続します|
+|第4回|IAMでの権限管理<br>マネジメントコンソールにてAWS環境手動構築|VPC・サブネットをはじめとするネットワークの構築<br>キーペア・EC2・RDSの作成<br>EC2にSSH接続・EC2からRDSに接続確認<br>[lecture4.md](./lecture-4-modify.md)|今回は、Cloud9環境下からEC2にSSH接続していますが、第5回以降はローカルPCからSSH接続します|
 |第5回|EC2にRailsアプリケーションをデプロイ<br>ELBを用いた冗長化・負荷分散<br>S3の役割<br>AWS構成図の作成|EC2にRailsアプリケーションのデプロイ<br>ALB構成を加えて冗長化してデプロイ<br>S3に画像の保存先を変更<br>[lecture5.md](./lecture5.md)|ここからCloud9を使用せずローカルPCを使用|
-|第6回|AWSでの証跡、ロギングツール<br>AWSでの監視、通知ツール<br>AWSでのコスト管理ツール|AWSを利用した日の記録をCloudTrailのイベントから抽出<br>CloudWatchアラームにて、ALBのアラーム設定し、メール通知する<br>AWS Pricing CalculatorにてAWS利用料の見積の作成と,AWS brillingを用いて現在の利用料を報告する<br>[lecture6](./lecture6.md)||
+|第6回|AWSでの証跡、ロギングツール<br>AWSでの監視、通知ツール<br>AWSでのコスト管理ツール|AWSを利用した日の記録をCloudTrailのイベントから抽出<br>CloudWatchアラームにて、ALBのアラーム設定し、メール通知する<br>AWS Pricing CalculatorにてAWS利用料の見積の作成と,AWS Billingを用いて現在の利用料を報告する<br>[lecture6](./lecture6.md)||
 |第7回|AWSでのセキュリティ対策|第4・5回で作成した環境で考えられる脆弱性をまとめる<br>[lecture7](./lecture7.md)||
 |第8回|ライブコーディング第4回〜第5回①|課題なし 第4回 第5回の復習||
 |第9回|ライブコーディング第4回〜第5回②|課題なし 第4回 第5回の復習||
