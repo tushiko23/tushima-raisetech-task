@@ -1,7 +1,7 @@
 # part4:nginxと組み込みサーバー(puma)をunixsocketを用いてサンプルアプリケーションの動作確認
 - /etc/nginx/nginx.confを編集
 ![](../images/nginx.conf-1.png)
-![](../images/nginx.conf-2-1.png)
+![](../images/nginx.conf-2.png)
 ![](../images/nginx.conf-3.png)
 ```sh
 #user nginx;からec2-userに変更
@@ -11,12 +11,12 @@ user ec2-user;
       server unix:///home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock;
    }
 #server_name: _;からlocalhost;に変更
-　  server {
+   server {
         listen       80;
         listen       [::]:80;
         server_name  localhost;
 #root;から/home/ec2-user/raisetech-live8-sample-app/public;
-　　　　　root        /home/ec2-user/raisetech-live8-sample-app/public;
+        root        /home/ec2-user/raisetech-live8-sample-app/public;
 
 #try_filesの設定
 location / {
@@ -116,5 +116,26 @@ sudo systemctl start puma
 sudo systemctl status puma
 ```
 ![](../images/systemd-puma-start.png)
+
+Permission denied /var/lib/nginx が表示されるので、ディレクトリ下の権限と所有者、所有グループを変更
+```
+sudo chmod 755 /var/lib/nginx
+sudo chown -R ec2-user:ec2-user  /var/lib/nginx
+```
+
+The asset "application.css" is not present in the asset pipeline.が表示
+![](../images/asset_precompile.png)
+
+アセットプリコンパイルの設定を手動で反映させる
+→[参考記事](https://qiita.com/scivola/items/e3e766b3e672a39b7a8f)
+```
+# 今回は,development環境
+RAILS_ENV=development bin/rails assets:precompile
+```
+アプリケーションサーバーpumaを再起動
+```sh
+sudo systemctl daemon-reload
+sudo systemctl restart puma 
+```
 - nginxと組み込みサーバー(puma)の起動が確認できたら、パプリックアドレスでアクセス
 ![](../images/puma+nginx-check.png)
