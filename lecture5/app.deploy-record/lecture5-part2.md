@@ -17,7 +17,7 @@ bind "unix:///home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock"
 bundle exec rails s
 ```
 ![](../images/bundle-exuc-rails-s-1.png)
-- curlを使ってunixsocket通信でアクセス
+- 別ターミナルを開き,curlを使ってunixsocket通信でアクセス
 ```
 #curl --unix-socket <ソケットへのパス> http://localhost/
 curl --unix-socket /home/ec2-user/raisetech-live8-sample-app/tmp/sockets/puma.sock http://localhost/

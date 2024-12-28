@@ -117,7 +117,7 @@ mysql -u root -p
 #データベースのエンドポイント:database-1.cdisayw68dw6.ap-northeast-1.rds.amazonaws.com
 #ポート番号:3306
 #マスタユーザ名:admin
-mysql -h データベースのエンドポイント　-P 3306 -u admin -p
+mysql -h データベースのエンドポイント -P 3306 -u admin -p
 #マスタパスワードを入力でログインし、接続確認
 #show databases;で内容も確認
 show databases;
@@ -139,44 +139,55 @@ default: &default
 adapter: mysql2
 encoding: utf8mb4
 pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-username: RDSのマスタユーザ名　admin
-password: RDSのマスタパスワード　　セキュリティのため非公開
-host    : RDSのエンドポイント　　database-1.cdisayw68dw6.ap-northeast-1.rds.amazonaws.com
+username: RDSのマスタユーザ名 admin
+password: RDSのマスタパスワード セキュリティのため非公開
+host    : RDSのエンドポイント database-1.cdisayw68dw6.ap-northeast-1.rds.amazonaws.com
 port    : 3306
 ```
 ![](../images/mysql-yml-1.png)
 
-3　EC2のセキュリティグループを「インポート3000番」「0.0.0.0./0」を付与
-![](../images/securitygloup1.png)　　
-![](../images/security-group2.png)　
+3 EC2のセキュリティグループを「インポート3000番」「0.0.0.0./0」を付与
+![](../images/securitygloup1.png)
+![](../images/security-group2.png)
 環境構築のコマンド
 ```sh
 bin/setup
 ```
-エラー　install missing gems with bundle install が表示
+エラー install missing gems with bundle install が表示
 ```sh
 #bundle install を実施
 bundle install
-#再度環境構築
+```
+webpackをインストールして使える状態にする
+```
+npm init -y
+npm install -D webpack webpack-cli
+# 依存関係を解決
+yarn install
+```
+
+```
+#再度環境構築コマンドを実施
 bin/setup
 ```
+
 ![](../images/bin-setup.png)
 
-5　組み込みサーバーの起動
+5 組み込みサーバーの起動
 ```sh
 bin/dev
 ```
-6　ec2のパプリックIPアドレス:3000にアクセス
+6 ec2のパプリックIPアドレス:3000にアクセス
 アプリケーションは表示成功も、画像表示がされない
 ![](../images/puma-app-start.png)
-エラー　Could not open library 'libvips.so.42'　が表示
+エラー Could not open library 'libvips.so.42' が表示
 
 原因と解決方法
 
 railsのversionが6から7以降にアップグレードした場合、デフォルトでvipsを使う設定になっているので、railsのバージョン7以降でimagemagickを使えるようにするには、
-config.active_storage.variant_processor = :mini_magick　を追加する必要がある。
+config.active_storage.variant_processor = :mini_magick を追加する必要がある。
 
-![](../images/libvips.so.42.png)　
+![](../images/libvips.so.42.png)
 ```sh
 #デフォルトでMiniMagickを使用する設定に変更
 cd config/application.rb

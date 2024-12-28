@@ -39,4 +39,7 @@ config.hosts  << raisetech-task5-road-balancer-1820876518.ap-northeast-1.elb.ama
 ![](../images/config.hosts-roadbalancer.png)
 
 - サーバを再起動して、動作確認
+```
+sudo systemctl restart puma
+```
 ![](../images/elb-check-2.png)

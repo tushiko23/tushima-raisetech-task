@@ -1,11 +1,8 @@
 Parameters:
-  PJPrefix:
-    Type: String
-  
   #InternetALB
   ALBName:
     Type: String
-    Default: "lecture10-clf"
+    Default: "lecture10-cfn"
 
   IpAddressType:
     Type: String
@@ -27,10 +24,10 @@ Resources:
       Protocol: HTTP
       Matcher:
         HttpCode: '200'
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-cfn-VPCid
       TargetType: instance
       Targets:
-        - Id: !ImportValue Lecture10-EC2clf
+        - Id: !ImportValue Lecture10-EC2cfn
 
   #=================================
   # ALBの作成
@@ -43,8 +40,8 @@ Resources:
       Name: !Sub ${ALBName}-alb
       IpAddressType: !Ref IpAddressType
       Subnets:
-        - !ImportValue lecture10-clf-PublicSubnet1id
-        - !ImportValue lecture10-clf-PublicSubnet2id
+        - !ImportValue lecture10-cfn-PublicSubnet1id
+        - !ImportValue lecture10-cfn-PublicSubnet2id
       SecurityGroups:
         - !ImportValue "lecture10-sg-SG3-ALB"
       Tags:
@@ -62,3 +59,4 @@ Resources:
       LoadBalancerArn: !Ref ALB
       Port: 80
       Protocol: HTTP    
+

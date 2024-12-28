@@ -21,39 +21,37 @@
 - user:第1回課題で作成したAdministratorAccessを付与したIAMuser→権限s3fullaccessも含まれることを確認
 ![](../images/ec2-user-IAM.png)
 
-- 「Access key ID」「Secret access key」の作成
-セキュリティのため値は非公開
-GemfIleに　gem "aws-sdk-s3", require: false　を追加する
+- ~~「Access key ID」「Secret access key」の作成~~
+~~セキュリティのため値は非公開~~ → 権限管理をEC2にIAMロールの付与することにより不要。
+
+→ S3へのアクセスを許可するIAMロールとIAMポリシーをEC2に付与
+
+GemfIleに gem "aws-sdk-s3", require: false を追加する
 再度bundle install
 
-- environments/development.rbにて画像の保存先を変更する local;　→　amazon;
+- environments/development.rbにて画像の保存先を変更する local;→amazon;
 ![](../images/config-s3-save-amazon.png)
 
 - storage.ymlにS3の情報を追加
 ```sh
  amazon:
  service: S3
- region: ap-northeast-1　
- bucket: 自身の「バケット名」を入力
+ region: ap-northeast-1
+ bucket: <%= ENV['AWS_S3_BUCKET_NAME'] %>
 ```
 
-- アクセスキーは直接記述すると、gitpushしたときに危険なため、環境変数で記述
+- ~~storage.ymlアクセスキー情報を環境変数で記述~~→IAMロールで権限設定しているので設定不要。
+
+追加設定
+
+- S3バケット名を環境変数の設定
 ```sh
-export AWS_ACCESS_KEY_ID="IAMuserで作成したAccess key ID"
-export AWS_SECRET_ACCESS_KEY="IAMuserで作成したSecret access key"
-source ~/.zshrc
+vi ~/.bash_profile
+# バケット名を追加
+export AWS_S3_BUCKET_NAME=my-aws-bucket-task5
+# 下記コマンドでも可
+echo "export AWS_S3_BUCKET_NAME=my-aws-bucket-task5" >> ~/.bash_profile
 ```
-
-- storage.ymlアクセスキー情報を環境変数で記述
-```sh
-amazon:
-service: S3
-region: ap-northeast-1
-access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
-secret_access_key:  <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
-```
-
-![](../images/s3-save-strage-1.png)
 
 - git-secretsをインストールしてgithubに誤ってpushしないようにする
 
