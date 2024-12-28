@@ -11,8 +11,9 @@ jobs:
           name: run cfn-lint
           command: |
             set -x
-            # cfn-lint -i W3002 -t cloudformation/*.yml
-            cfn-lint -i 3002 -t lecture10/*.yml
+            cfn-lint -i W3002 -t cloudformation/*.yml
+            cfn-lint -i W3002 -t lecture10/*.yml
+
 workflows:
   raisetech:
     jobs:
