@@ -1,6 +1,7 @@
 Parameters:
   PJPrefix: 
     Type: String
+    Default: "cfn"
 
   DBInstanceName:
     Type: String
@@ -33,25 +34,17 @@ Parameters:
     
   DBMasterUserName:
     Type: String
-    Default: "DBUserName"
+    Default: "admin"
     NoEcho: true
     MinLength: 1
     MaxLength: 16
     AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
     ConstraintDescription: "must begin with a letter and contain only alphanumeric characters."
-    
-  DBPassword: 
-    Type: String
-    Default: "DBpassword"
-    NoEcho: true
-    MinLength: 8
-    MaxLength: 41
-    AllowedPattern: "[a-zA-Z0-9]*"
-    ConstraintDescription: "must contain only alphanumeric characters."
 
 # AvailabilityZoneを選択
   AvailabilityZone:
-    Type: AWS::EC2::AvailabilityZone::Name
+    Type: String
+    Default: "ap-northeast-1a"
 
   MultiAZ: 
     Type: String
@@ -59,11 +52,39 @@ Parameters:
     AllowedValues: [ "true", "false" ]
 
 # ------------------------------------------------------------#
-#  DBInstance MySQLの作成
+#  DBInstance PassWordの作成
 # ------------------------------------------------------------#
 Resources:
+  DBPassword: 
+    Type: AWS::SecretsManager::Secret
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      GenerateSecretString:
+        PasswordLength: 16
+        ExcludeCharacters: '"@/\'
+      Name: !Sub ${PJPrefix}${DBInstanceName}-database-password
+
+# ------------------------------------------------------------#
+#  DBSubnetGroup
+# ------------------------------------------------------------#
+  DBSubnetGroup: 
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupName: !Sub "${PJPrefix}-${DBInstanceName}-subnet"
+      DBSubnetGroupDescription: "-"
+      SubnetIds: 
+        - !ImportValue lecture10-cfn-PrivateSubnet1id
+        - !ImportValue lecture10-cfn-PrivateSubnet2id
+
+# ------------------------------------------------------------#
+#  DBInstance MySQLの作成
+# ------------------------------------------------------------#
+
   DBInstance: 
     Type: "AWS::RDS::DBInstance"
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
     Properties: 
       DBInstanceIdentifier: !Sub "${PJPrefix}-${DBInstanceName}"
       Engine: MySQL
@@ -73,7 +94,7 @@ Resources:
       StorageType: !Ref DBInstanceStorageType
       DBName: !Ref DBName
       MasterUsername: !Ref DBMasterUserName
-      MasterUserPassword: !Ref DBPassword
+      MasterUserPassword: !Sub '{{resolve:secretsmanager:${PJPrefix}${DBInstanceName}-database-password:SecretString}}'
       DBSubnetGroupName: !Ref DBSubnetGroup
       AvailabilityZone: !Ref AvailabilityZone
       PubliclyAccessible: false
@@ -90,16 +111,4 @@ Resources:
       Tags: 
         - Key: "Name"
           Value: !Ref DBInstanceName
-    DeletionPolicy: "Delete"
 
-# ------------------------------------------------------------#
-#  DBSubnetGroup
-# ------------------------------------------------------------#
-  DBSubnetGroup: 
-    Type: "AWS::RDS::DBSubnetGroup"
-    Properties: 
-      DBSubnetGroupName: !Sub "${PJPrefix}-${DBInstanceName}-subnet"
-      DBSubnetGroupDescription: "-"
-      SubnetIds: 
-        - !ImportValue lecture10-clf-PrivateSubnet1id
-        - !ImportValue lecture10-clf-PrivateSubnet2id
