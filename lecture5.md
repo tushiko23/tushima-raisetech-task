@@ -46,7 +46,7 @@
 
 ![](lecture5/images/curl-check-1.png)
 
-![](lecture5/images/applicaton-hyouzi.png)
+![](lecture5/images/application-hyouzi.png)
 
 ### Nginx単体での動作確認
 
