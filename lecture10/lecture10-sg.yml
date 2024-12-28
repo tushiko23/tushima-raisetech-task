@@ -27,10 +27,6 @@ Parameters:
     Type: String
     Default: '80'
 
-  SgEgFromPort1:
-    Type: String
-    Default: '3306'
-
   SGName2:
     Type: String
     Default: "lecture10-sg02"
@@ -57,7 +53,7 @@ Resources:
     Properties:
       GroupDescription: test-create
       GroupName: !Ref SGName1
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-cfn-VPCid
       Tags:
         - Key: "Name"
           Value: "lecture10"
@@ -67,7 +63,7 @@ Resources:
     Properties:
       GroupDescription: test-create
       GroupName: !Ref SGName2
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-cfn-VPCid
       Tags:
         - Key: "Name"
           Value: "lecture10"
@@ -118,7 +114,7 @@ Resources:
     Properties:
       GroupDescription: test-create
       GroupName: !Ref SGName3
-      VpcId: !ImportValue lecture10-clf-VPCid
+      VpcId: !ImportValue lecture10-cfn-VPCid
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref SgIngFromPort4
