@@ -30,7 +30,7 @@ Parameters:
     
   DBName:
     Type: String
-    Default: "database1"
+    Default: "database-1"
     
   DBMasterUserName:
     Type: String
