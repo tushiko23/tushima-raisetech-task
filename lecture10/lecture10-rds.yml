@@ -30,7 +30,7 @@ Parameters:
     
   DBName:
     Type: String
-    Default: "database-1"
+    Default: "database1"
     
   DBMasterUserName:
     Type: String
@@ -66,18 +66,6 @@ Resources:
       Name: !Sub ${PJPrefix}${DBInstanceName}-database-password
 
 # ------------------------------------------------------------#
-#  DBSubnetGroup
-# ------------------------------------------------------------#
-  DBSubnetGroup: 
-    Type: "AWS::RDS::DBSubnetGroup"
-    Properties: 
-      DBSubnetGroupName: !Sub "${PJPrefix}-${DBInstanceName}-subnet"
-      DBSubnetGroupDescription: "-"
-      SubnetIds: 
-        - !ImportValue lecture10-cfn-PrivateSubnet1id
-        - !ImportValue lecture10-cfn-PrivateSubnet2id
-
-# ------------------------------------------------------------#
 #  DBInstance MySQLの作成
 # ------------------------------------------------------------#
 
@@ -111,4 +99,16 @@ Resources:
       Tags: 
         - Key: "Name"
           Value: !Ref DBInstanceName
+
+# ------------------------------------------------------------#
+#  DBSubnetGroup
+# ------------------------------------------------------------#
+  DBSubnetGroup: 
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupName: !Sub "${PJPrefix}-${DBInstanceName}-subnet"
+      DBSubnetGroupDescription: "-"
+      SubnetIds: 
+        - !ImportValue lecture10-cfn-PrivateSubnet1id
+        - !ImportValue lecture10-cfn-PrivateSubnet2id
 
