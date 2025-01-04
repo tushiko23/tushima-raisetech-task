@@ -11,6 +11,18 @@
 ### 構成図
 ![](lecture13/images/01_AWS_Architecture_Diagram.png)
 
+## Railsアプリケーションに使用した言語
+* 今回はオンラインプログラミングスクールRaiseTechの講師の方が作成してくださったアプリケーションを使用します。
+* エンジニアに向けて書くREADMEを記述する上で必要な事項だと判断しましたので、自作で開発をしていませんが今回掲載させていただきます。
+
+1. Ruby on Rails: バージョン 7.1.3.2
+2. HTML: サイトの見た目を構成する
+3. CSS: サイトのデザインやスタイルを適用する
+4. JavaScript: 動的な要素やインタラクティブな機能を追加する
+
+参考サイト
+* [HTMLとCSSを使ってアプリをスタイリングしよう](https://railsgirls.jp/html-and-css)
+* [JavaScriptでできること一覧！特徴や他言語との比較も解説](https://career.levtech.jp/guide/knowhow/article/700/)
 ## Railsアプリケーションに使用しているライブラリの名称とバージョン
 
 ### Ruby 
@@ -35,15 +47,15 @@ v17.9.1
 ```
 
 ## デプロイ時に使用するサーバーの名称とバージョン
-### Nginx (WebServerとして使用, amazon-linux-extrasにてインストール)
+### Nginx (WebServer)
 ```
 1.22.1
 ```
-### Puma (ApplicationServerとして使用,gemにてインストール済み,systemdにて自動起動する) 
+### Puma (ApplicationServer) 
 ```
 6.4.2
 ```
-### RDS (DataBaseServerとして使用,DBエンジンはMySQL)
+### RDS (DataBaseServer,DBエンジンはMySQL)
 ```
 # DBエンジンのMySQLのバージョン
 8.0.40
@@ -52,47 +64,27 @@ v17.9.1
 ## デプロイ手順
 ### 手動デプロイする手順は[こちらを参照](lecture5.md)
 ### 自動デプロイする手順
-#### 使用するツール
 
-<details><summary>1. AWS CloudFormation:</summary>
-Railsアプリケーションのデプロイに必要なインフラストラクチャをAWSCloud上に生成する。(IaCツール)
-
-</details>
-
-<details><summary>2. AWS CLI:</summary>
-CloudFormationのテンプレートのスタック作成及び更新や作成したAWSリソースの動的値を取得する
-
-</details>
-
-<details><summary>3. cfn-lint:</summary> 
-CloudFormationのテンプレートで構文エラーやバグがないかをチェックする
-
-</details>
-
-<details><summary>4. CircleCI:</summary> 
-コードが変更・更新されたときにRailsアプリケーションを自動デプロイ&稼働させるために必要なパイプラインを自動で行う(CI/CDツール)
-
-</details>
-
-<details><summary>5. Ansible:</summary>  
-デプロイするサーバーの環境設定や構築といった事前準備処理を行う
-
-</details>
-
-<details><summary>6. ServerSpec:</summary>
-テスト項目を設定し、構築されたインフラ環境を自動テストする
-
-</details>
-
-#### デプロイ手順
-
- 1. CI/CDツールCircleCIにて環境変数の設定をする
+1. CircleCIにて環境変数の設定をする
 
     [設定する環境変数はこちら](https://github.com/tushiko23/tushima-raisetech-task/blob/main/lecture13.md?plain=1#L120C1-L120C31)
- 2. 
+
+    **※以後CircleCIのPipelineにて実行します**
+
+2. Cfn-lintにてCloudFormationのテンプレートの構文エラーに異常なしを確認
+
+3. AWS CLIにてCloudFormationのスタックを作成しAWSCloud上にインフラ環境を構築
+
+4. AnsibleにてRailsアプリケーションを自動デプロイするためのプロビジョニング(事前準備処理)を行う
+
+5. ServerSpecにて、テスト項目を実施し、構築・変更されたインフラ環境の自動テストを行う。
+
+[自動デプロイしたリポジトリはこちら](https://github.com/tushiko23/circleci-rails-app)
 
 
 ### オンラインプログラミングスクールRaiseTechでの学習記録
+
+<details><summary>こちらから参照</summary>
 
 |講義|学習内容|課題内容と記録|備考|
 |---|-----|-----|-----|
@@ -112,3 +104,5 @@ CloudFormationのテンプレートで構文エラーやバグがないかをチ
 |第14回|ライブコーディング第13回①|READMEの訂正やこれまでの課題の記録を総括し,ポートフォリオの作成||
 |第15回|ライブコーディング第13回②|READMEの訂正やこれまでの課題の記録を総括し,ポートフォリオの作成||
 |第16回|現場に出るにあたっての必要な技術と知識<br>現場での立ち振る舞い<br>就職・転職で優位に立つために|課題なし <br>転職活動・現場に出るための準備|
+
+</details>
