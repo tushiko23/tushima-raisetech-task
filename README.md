@@ -1,77 +1,96 @@
 # Railsアプリケーションを CloudFormation Ansible CircleCI を用いて、自動デプロイ&自動稼働し、ServerSpecでインフラ環境を自動テストをする
+## 概要
 
-* 下記の構成図のインフラ構成でRailsアプリケーションを自動デプロイ&自動稼働し、ServerSpecにてテストをします。
+* 下記の構成図のインフラ構成でRailsアプリケーションをAWS上に自動デプロイ&自動稼働し、ServerSpecにてテストをします。
 * 今回使用するRailsアプリケーションのデプロイ時のイメージとソースコードは下記を参照にしてください。
 
 [デプロイ時のRailsアプリケーションイメージ](https://lecture13-evdence-app.s3.ap-northeast-1.amazonaws.com/Screen+recording+2024-12-22+21.25.34.webm)
 
 [アプリケーションのソースコード](https://github.com/yuta-ushijima/raisetech-live8-sample-app)
 
-
-## 構成図
-
+### 構成図
 ![](lecture13/images/01_AWS_Architecture_Diagram.png)
 
-## 自動化構成の解説
-### 1. **IaC（Infrastructure as Code)**  →**CloudFormation**
+## Railsアプリケーションに使用しているライブラリの名称とバージョン
 
-* 役割:Railsアプリケーションをデプロイ&稼働させるインフラストラクチャをAWS内に構築する
-* 選定理由: 
-  1. UIに優れている(GUI→AWSコンソールが使える) 
-  2. スタック・リソースの状態管理がAWSで自動管理(AmazonS3のバケット内に保存される)
-  3. 排他制御が容易。(作成時、CREATE_IN_PROGRESSとなり、ここでは変更不可になる)
-  4. 適用失敗時にロールバック機能ある。(更新中のエラーや問題が影響を与えることなく、環境が安定した状態を維持できる)
-* 類似サービス: Terraform, Pulumi など
+### Ruby 
+```
+3.2.3
+```
+### Bundler
+```
+2.3.14
+```
+### Rails
+```
+7.1.3.2
+```
+### Node
+```
+v17.9.1
+```
+### Yarn
+```
+1.22.19
+```
 
-### 2. **構成管理(プロビジョニング)ツール** → **Ansible**
+## デプロイ時に使用するサーバーの名称とバージョン
+### Nginx (WebServerとして使用, amazon-linux-extrasにてインストール)
+```
+1.22.1
+```
+### Puma (ApplicationServerとして使用,gemにてインストール済み,systemdにて自動起動する) 
+```
+6.4.2
+```
+### RDS (DataBaseServerとして使用,DBエンジンはMySQL)
+```
+# DBエンジンのMySQLのバージョン
+8.0.40
+```
 
-* 役割: ターゲットノード(今回はEC2)にRailsアプリケーションのデプロイ&稼働に必要な環境構築、設定や変更を加える。
-* 選定理由: 
-  1. 非エージェント型のツールで,エージェントと呼ばれる通信を行う為のモジュールを事前に導入が不要である
-  2. YAMLファイルが理解できれば実装できる
-* 類似サービス: Chef、Puppet など
-### 3. **CI/CDツール(Continuous Integration/Continuous Delivery)** → **CircleCI**
-* 役割:  ソフトウェアの開発プロセス(今回は,CloudFormation,Ansible,ServerSpecの実行及び更新)において、コードの変更を常にテストし、自動で本番環境に適用する。
-* 選定理由:
-  1. 環境構築のコストが低く、手軽に導入できる
-  2. 無料枠が用意されていて、公式ドキュメントやUIが充実している
-* 類似サービス: GitHubActions AWSCodeBuild Jenkins など
+## デプロイ手順
+### 手動デプロイする手順は[こちらを参照](lecture5.md)
+### 自動デプロイする手順
+#### 使用するツール
 
-## インフラ構成の解説
+<details><summary>1. AWS CloudFormation:</summary>
+Railsアプリケーションのデプロイに必要なインフラストラクチャをAWSCloud上に生成する。(IaCツール)
 
-### 1. EC2
-* 役割: 汎用的な仮想サーバで、WebServerであるNginxとApplicationServerであるPumaを稼働させる<br>※ 今回は、簡単な構成でインフラ構成をわかりやすくする+コストを抑えるという理由で1台のインスタンスにNginxとPumaを稼働させています。
-* 選定理由: 
-  1. 環境構築やデプロイ時の設定を手動構築で行うため、自動化の際にイメージが容易である
-  2. 言語の成約がなく、サーバレス独自のルールもないので学習コストがかからず容易に導入が可能である
-  3. サーバの起動にかかる時間が短い
-  4. サーバの保守や監視を自社で行え、障害が起きた際にも問題を切り分けて対応することができる
-* 代替手段: Lambda ECS
+</details>
 
-### 2. RDS
-* 役割: RailsアプリケーションのDataBaseServerとして使用する
-* 選定理由: 
-  1. 使用できるDBエンジンバージョンが豊富。
-  2. サーバのインストールや設定, パッチの適用やバックアップも自動で行ってくれるので、構築や管理が省力的ですぐに活用できる
-* 代替手段: Aurora
+<details><summary>2. AWS CLI:</summary>
+CloudFormationのテンプレートのスタック作成及び更新や作成したAWSリソースの動的値を取得する
 
-### 3. ALB
-* 役割: Railsアプリケーションの冗長化・リクエストの負荷分散
-* 選定理由:
-  1. HTTP/HTTPS プロトコルに特化したロードバランサーである
-  2. HTTP通信の中身を確認することができる(CloudWatchメトリクス・ALBの接続・アクセスログなど)
-  3. アクセスするURLに応じて転送先を変えることが可能なため。
+</details>
 
-### 4. S3
-* 役割:Railsアプリケーションの画像の保存先に設定する
-* 選定理由:
-  1. 優れた耐久性・可用性で低コストで利用できる(データ喪失はほぼ発生しない)
-  2. 権限管理が柔軟にでき,データの公開やアクセス管理を細かく設定できるため。
-  3. スケーラブルな容量無制限のストレージであるため
+<details><summary>3. cfn-lint:</summary> 
+CloudFormationのテンプレートで構文エラーやバグがないかをチェックする
 
-## 学習記録
+</details>
 
-[Buildupでの日々の学習記録](https://app.build-up.info/enterprises/bEDI6AXZ/portfolio/bQO5AjMgoTd)
+<details><summary>4. CircleCI:</summary> 
+コードが変更・更新されたときにRailsアプリケーションを自動デプロイ&稼働させるために必要なパイプラインを自動で行う(CI/CDツール)
+
+</details>
+
+<details><summary>5. Ansible:</summary>  
+デプロイするサーバーの環境設定や構築といった事前準備処理を行う
+
+</details>
+
+<details><summary>6. ServerSpec:</summary>
+テスト項目を設定し、構築されたインフラ環境を自動テストする
+
+</details>
+
+#### デプロイ手順
+
+ 1. CI/CDツールCircleCIにて環境変数の設定をする
+
+    [設定する環境変数はこちら](https://github.com/tushiko23/tushima-raisetech-task/blob/main/lecture13.md?plain=1#L120C1-L120C31)
+ 2. 
+
 
 ### オンラインプログラミングスクールRaiseTechでの学習記録
 
@@ -92,11 +111,4 @@
 |第13回|構成管理(プロビジョニング)ツール<br>Ansibleの導入<br>CI/CDツールCircleCIとの連携|CI/CDツールCircleCI内にCloudFormation,Ansible,ServerSpecのジョブを組み込み,Railsアプリケーションを自動デプロイ&自動稼働とインフラ環境の自動テストを成功させる<br>[lecture13](./lecture13.md)|Ansibleのみでの実行時のコントロールノードはAmazonlinux2022をOSとするEC2を利用。<br>ServerSpecはSSH接続。|
 |第14回|ライブコーディング第13回①|READMEの訂正やこれまでの課題の記録を総括し,ポートフォリオの作成||
 |第15回|ライブコーディング第13回②|READMEの訂正やこれまでの課題の記録を総括し,ポートフォリオの作成||
-|第16回|現場に出るにあたっての必要な技術と知識<br>現場での立ち振る舞い<br>就職・転職で優位に立つために|課題なし <br>転職活動・現場に出るための準備||
-
-### その他の学習記録
-
-|学習内容|学習記録|備考|
-|-----|-----|-----|
-|AWSCLIの使用|第4回・第5回環境をAWSCLIで作成<br>[作成したもの](https://github.com/tushiko23/CLI-AWS/tree/modify)||
-|IaCツールTerraformの使用|第4回・第5回環境をTerraformにて構築<br>[作成したもの](https://github.com/tushiko23/terraform-AWS/tree/git-lecture)|コードと説明は更新途中なので随時更新予定|
+|第16回|現場に出るにあたっての必要な技術と知識<br>現場での立ち振る舞い<br>就職・転職で優位に立つために|課題なし <br>転職活動・現場に出るための準備|
