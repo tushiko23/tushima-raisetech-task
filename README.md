@@ -15,10 +15,10 @@
 * 今回はオンラインプログラミングスクールRaiseTechの講師の方が作成してくださったアプリケーションを使用します。
 * エンジニアに向けて書くREADMEを記述する上で必要な事項だと判断しましたので、自作で開発をしていませんが今回掲載させていただきます。
 
-1. Ruby on Rails: バージョン 7.1.3.2
-2. HTML: サイトの見た目を構成する
-3. CSS: サイトのデザインやスタイルを適用する
-4. JavaScript: 動的な要素やインタラクティブな機能を追加する
+#### 1. Ruby on Rails: バージョン 7.1.3.2
+#### 2. HTML: サイトの見た目を構成する
+#### 3. CSS: サイトのデザインやスタイルを適用する
+#### 4. JavaScript: 動的な要素やインタラクティブな機能を追加する
 
 参考サイト
 * [HTMLとCSSを使ってアプリをスタイリングしよう](https://railsgirls.jp/html-and-css)
@@ -67,7 +67,7 @@ v17.9.1
 
 1. CircleCIにて環境変数の設定をする
 
-    [設定する環境変数はこちら](https://github.com/tushiko23/tushima-raisetech-task/blob/main/lecture13.md?plain=1#L120C1-L120C31)
+    [設定する環境変数はこちら](lecture13.md)
 
     **※以後CircleCIのPipelineにて実行します**
 
