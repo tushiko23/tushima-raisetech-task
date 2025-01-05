@@ -4,7 +4,7 @@
 
 ## 構成図
 
-![](lecture13/images/01_AWS_Architecture_Diagram.png)
+![](../lecture13/images/01_AWS_Architecture_Diagram.png)
 
 ## 自動化構成の解説
 ### 1. **IaC（Infrastructure as Code)**  →**CloudFormation**
