@@ -12,7 +12,7 @@
 ![](lecture13/images/01_AWS_Architecture_Diagram.png)
 
 ## Railsアプリケーションに使用した言語
-* 今回はオンラインプログラミングスクールRaiseTechの講師の方が作成してくださったアプリケーションを使用します。
+* 今回はオンラインエンジニアリングスクールRaiseTechの講師の方が作成してくださったアプリケーションを使用します。
 * エンジニアに向けて書くREADMEを記述する上で必要な事項だと判断しましたので、自作で開発をしていませんが今回掲載させていただきます。
 
 #### 1. Ruby on Rails: バージョン 7.1.3.2
@@ -78,7 +78,7 @@ v17.9.1
 
 →[使用したリポジトリ](https://github.com/tushiko23/circleci-rails-app)
 
-## オンラインプログラミングスクールRaiseTechでの学習記録
+## オンラインエンジニアリングスクールRaiseTechでの学習記録
 
 <details><summary>こちらから参照</summary>
 
