@@ -60,7 +60,7 @@ v17.9.1
 
 ## デプロイ手順
 ### 手動デプロイする手順→[こちらを参照](lecture5.md)
-### 自動デプロイする手順→[リポジトリはこちら](https://github.com/tushiko23/circleci-rails-app)
+### 自動デプロイする手順
 
 1. CircleCIにて環境変数の設定をする
 
@@ -75,6 +75,8 @@ v17.9.1
 4. AnsibleにてRailsアプリケーションを自動デプロイするためのプロビジョニング(事前準備処理)を行う
 
 5. ServerSpecにて、テスト項目を実施し、構築・変更されたインフラ環境の自動テストを行う。
+
+→[使用したリポジトリ](https://github.com/tushiko23/circleci-rails-app)
 
 ## オンラインプログラミングスクールRaiseTechでの学習記録
 
