@@ -20,9 +20,6 @@
 #### 3. CSS: サイトのデザインやスタイルを適用する
 #### 4. JavaScript: 動的な要素やインタラクティブな機能を追加する
 
-参考サイト
-* [HTMLとCSSを使ってアプリをスタイリングしよう](https://railsgirls.jp/html-and-css)
-* [JavaScriptでできること一覧！特徴や他言語との比較も解説](https://career.levtech.jp/guide/knowhow/article/700/)
 ## Railsアプリケーションに使用しているライブラリの名称とバージョン
 
 ### Ruby 
